@@ -1,9 +1,14 @@
 package fr.pizzeria.console;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import fr.pizzeria.model.AjouterPizzaOptionMenu;
+import fr.pizzeria.model.ListerPizzasOptionMenu;
+import fr.pizzeria.model.ModifierPizzaOptionMenu;
 import fr.pizzeria.model.Pizza;
+import fr.pizzeria.model.SupprimerPizzaOptionMenu;
 
 /**
  * @author Florent Callaou
@@ -13,9 +18,7 @@ public class PizzeriaConsoleApp {
 	
 	// Scanner d'entrée
 	private static Scanner sc = new Scanner(System.in);
-	// Liste de pizzas
-	private static ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
-	
+		
 	/**
 	 * Méthode main
 	 * @param args
@@ -24,6 +27,7 @@ public class PizzeriaConsoleApp {
 		
 		// Choix de l'utilisateur dans le menu
 		int choix;
+		List<Pizza> pizzas = new ArrayList<>();
 		
 		// Instanciations des pizzas
 		Pizza peperoni = new Pizza("PEP", "Pépéroni", 12.50);
@@ -35,7 +39,6 @@ public class PizzeriaConsoleApp {
 		Pizza orientale = new Pizza("ORI", "L’orientale", 13.50);
 		Pizza indienne = new Pizza("IND", "L’indienne", 14.00);
 			
-		// Ajouts des pizzas
 		pizzas.add(peperoni);
 		pizzas.add(margherita);
 		pizzas.add(reine);
@@ -44,6 +47,11 @@ public class PizzeriaConsoleApp {
 		pizzas.add(savoyarde);
 		pizzas.add(orientale);
 		pizzas.add(indienne);
+		
+		ListerPizzasOptionMenu listerPizzas = new ListerPizzasOptionMenu(pizzas);
+		AjouterPizzaOptionMenu ajouterPizza = new AjouterPizzaOptionMenu(pizzas);
+		ModifierPizzaOptionMenu modifierPizza = new ModifierPizzaOptionMenu(pizzas);
+		SupprimerPizzaOptionMenu supprimerPizza = new SupprimerPizzaOptionMenu(pizzas);
 		
 		// Affichage du menu
 		menu();
@@ -57,21 +65,22 @@ public class PizzeriaConsoleApp {
 			switch(choix){
 			// Si choix 1 : affichage des pizzas
 			case 1:
-				affichage();
+				listerPizzas.execute();
 				
 				break;
 			// Si choix 2 : ajout d'une pizza
 			case 2:
-				pizzas.add(ajout());
+				ajouterPizza.execute();
+				
 				break;
 			// Si choix 3 : Mise à jour d'une pizza
 			case 3:
-				miseAJour();
+				modifierPizza.execute();
 				
 				break;
 			// Si choix 4 : Suppression d'une pizza
 			case 4:
-				suppression();
+				supprimerPizza.execute();
 				break;
 			// Sinon : Mauvaise entrée
 			default:
@@ -89,8 +98,7 @@ public class PizzeriaConsoleApp {
 		sc.close();
 		
 	}
-	
-	
+		
 	/**
 	 * Méthode d'affichage du menu
 	 */
@@ -102,94 +110,5 @@ public class PizzeriaConsoleApp {
 		System.out.println("4. Supprimer une pizza");
 		System.out.println("99. Sortir");
 	}
-	
-	
-	/**
-	 * Méthode d'affichage de la liste des pizzas
-	 */
-	private static void affichage(){
-		System.out.println("Liste des pizzas : ");
-		for (Pizza pizza : pizzas) {
-			System.out.println(pizza.toString());;
-		}
-	}
-	
-	
-	/**
-	 * Méthode d'ajout d'une pizza
-	 * @return la pizza à créer dans la liste
-	 */
-	private static Pizza ajout(){
-		System.out.println("Ajout d’une nouvelle pizza");
-		
-		System.out.println("Veuillez saisir le code");
-		String codeTemp = sc.next();
-		
-		System.out.println("Veuillez saisir le nom (sans espace)");
-		String nomTemp = sc.next();
-		
-		System.out.println("Veuillez saisir le prix (Avec une virgule pour les décimales)");
-		double prixTemp = sc.nextDouble();
-		
-		// On retourne la pizza à créer 
-		return new Pizza(codeTemp.toUpperCase(), nomTemp, prixTemp);
-		
-	}
-	
-	/**
-	 * Méthode de mise à jour d'une pizza
-	 */
-	private static void miseAJour(){
-		System.out.println("Mise à jour d’une pizza");
-		affichage();
-		System.out.println("Veuillez entrer le code de la pizza à modifier");
-		System.out.println("(99 pour abandonner)");
-		
-		String codeAModifier = sc.next();
-				
-		if(codeAModifier.equals("99")){
-			return;
-		}
-		
-		Pizza pizzaModifiee = ajout();
-		
-		for (Pizza pizza : pizzas) {
-			// Si le code de la pizza parcourue est égal au code que l'utilisateur à renseigné, on met à jour la pizza de la liste
-			if(codeAModifier.equals(pizza.getCode())){
-				pizza.setCode(pizzaModifiee.getCode());
-				pizza.setNom(pizzaModifiee.getNom());
-				pizza.setPrix(pizzaModifiee.getPrix());		
-				break;
-			}
-		}
-			
-	}
-	
-	/**
-	 * Méthode de suppression d'une pizza
-	 */
-	private static void suppression(){
-		System.out.println("Suppression d’une pizza");
-		affichage();
-		System.out.println("Veuillez entrer le code de la pizza à modifier");
-		System.out.println("(99 pour abandonner)");
-		
-		String codeASupprimer = sc.next();
-				
-		if(codeASupprimer.equals("99")){
-			return;
-		}
-		
-		for (Pizza pizza : pizzas) {
-			// Si le code de la pizza parcourue est égal au code que l'utilisateur à renseigné, on supprim ela pizza
-			if(codeASupprimer.equals(pizza.getCode())){
-				pizzas.remove(pizza);	
-				break;
-			}
-		}
-			
-	}
-	
-	
 
 }
