@@ -1,5 +1,6 @@
 package fr.pizzeria.ihm;
 
+import java.util.Scanner;
 
 /**
  * @author Florent Callaou
@@ -14,7 +15,7 @@ public abstract class OptionMenu {
 		super();
 	}
 	
-	public abstract void execute();
+	public abstract void execute(Scanner sc);
 		
 
 }

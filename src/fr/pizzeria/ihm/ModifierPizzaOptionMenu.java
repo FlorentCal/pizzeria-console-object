@@ -13,7 +13,6 @@ import fr.pizzeria.model.Pizza;
  */
 public class ModifierPizzaOptionMenu extends OptionMenu {
 
-	private Scanner sc = new Scanner(System.in);
 	private List<Pizza> pizzas = new ArrayList<>();
 	
 	private ListerPizzasOptionMenu lister;
@@ -31,17 +30,17 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 	/**
 	 * Méthode de mise à jour d'une pizza
 	 */
-	public void execute(){
+	public void execute(Scanner sc){
 		
 		System.out.println("Mise à jour d’une pizza");
 		
-		lister.execute();
+		lister.execute(sc);
 		
 		System.out.println("Veuillez entrer le code de la pizza à modifier");
 		System.out.println("(99 pour abandonner)");
 		
 		String codeAModifier = sc.next();
-		codeAModifier.toUpperCase();
+		codeAModifier = codeAModifier.toUpperCase();
 				
 		if(codeAModifier.equals("99")){
 			return;
@@ -67,7 +66,7 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 				break;
 			}
 		}
-		sc.close();
+
 	}
 	
 }

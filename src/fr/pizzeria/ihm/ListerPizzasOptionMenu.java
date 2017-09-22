@@ -2,6 +2,7 @@ package fr.pizzeria.ihm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import fr.pizzeria.model.Pizza;
 
@@ -26,7 +27,7 @@ public class ListerPizzasOptionMenu extends OptionMenu {
 	/**
 	 * Méthode d'affichage de la liste des pizzas
 	 */
-	public void execute(){
+	public void execute(Scanner sc){
 		System.out.println("Liste des pizzas : ");
 		for (Pizza pizza : pizzas) {
 			System.out.println(pizza.toString());;

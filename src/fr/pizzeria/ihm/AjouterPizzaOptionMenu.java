@@ -13,7 +13,6 @@ import fr.pizzeria.model.Pizza;
  */
 public class AjouterPizzaOptionMenu extends OptionMenu {
 
-	private Scanner sc = new Scanner(System.in);
 	private List<Pizza> pizzas = new ArrayList<>();
 	
 	/**
@@ -28,7 +27,7 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 	/**
 	 * Méthode d'ajout d'une pizza
 	 */
-	public void execute(){
+	public void execute(Scanner sc){
 		
 		System.out.println("Ajout d’une nouvelle pizza");
 		
@@ -41,10 +40,8 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 		System.out.println("Veuillez saisir le prix (Avec une virgule pour les décimales)");
 		double prixTemp = sc.nextDouble();
 		
-		pizzas.add(new Pizza(codeTemp, nomTemp, prixTemp));
-		sc.close();
+		pizzas.add(new Pizza(codeTemp.toUpperCase(), nomTemp, prixTemp));
 
 	}
-	
 	
 }

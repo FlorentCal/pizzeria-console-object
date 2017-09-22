@@ -88,8 +88,8 @@ public class Pizza {
 		return code + " -> " + nom + " (" + df.format(prix) + "€)";
 	}
 	
-	public int getNombrePizzas(){
-		return currentId - 1;
+	public static int getNombrePizzas(){
+		return currentId;
 	}
 
 

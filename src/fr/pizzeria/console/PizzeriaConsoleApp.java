@@ -17,7 +17,7 @@ import fr.pizzeria.model.Pizza;
 public class PizzeriaConsoleApp {
 	
 	// Scanner d'entrée
-	private static Scanner sc = new Scanner(System.in);
+	public static Scanner sc = new Scanner(System.in);
 		
 	/**
 	 * Méthode main
@@ -65,22 +65,22 @@ public class PizzeriaConsoleApp {
 			switch(choix){
 			// Si choix 1 : affichage des pizzas
 			case 1:
-				listerPizzas.execute();
-				
+				listerPizzas.execute(sc);
 				break;
 			// Si choix 2 : ajout d'une pizza
 			case 2:
-				ajouterPizza.execute();
-				
+				ajouterPizza.execute(sc);	
 				break;
 			// Si choix 3 : Mise à jour d'une pizza
 			case 3:
-				modifierPizza.execute();
-				
+				modifierPizza.execute(sc);			
 				break;
 			// Si choix 4 : Suppression d'une pizza
 			case 4:
-				supprimerPizza.execute();
+				supprimerPizza.execute(sc);
+				break;
+			case 5:
+				System.out.println("Nombre de pizzas : " + Pizza.getNombrePizzas());
 				break;
 			// Sinon : Mauvaise entrée
 			default:
@@ -108,6 +108,7 @@ public class PizzeriaConsoleApp {
 		System.out.println("2. Ajouter une nouvelle pizza");
 		System.out.println("3. Mettre à jour une pizza");
 		System.out.println("4. Supprimer une pizza");
+		System.out.println("5. Connaître nombre de pizzas");
 		System.out.println("99. Sortir");
 	}
 

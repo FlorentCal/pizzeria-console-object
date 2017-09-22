@@ -13,7 +13,6 @@ import fr.pizzeria.model.Pizza;
  */
 public class SupprimerPizzaOptionMenu extends OptionMenu {
 
-	private Scanner sc = new Scanner(System.in);
 	private List<Pizza> pizzas = new ArrayList<>();
 	private ListerPizzasOptionMenu lister;
 
@@ -30,14 +29,14 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 	/**
 	 * Méthode de suppression d'une pizza
 	 */
-	public void execute(){
+	public void execute(Scanner sc){
 		System.out.println("Suppression d’une pizza");
-		lister.execute();
+		lister.execute(sc);
 		System.out.println("Veuillez entrer le code de la pizza à modifier");
 		System.out.println("(99 pour abandonner)");
 
 		String codeASupprimer = sc.next();
-		codeASupprimer.toUpperCase();
+		codeASupprimer = codeASupprimer.toUpperCase();
 
 		if(codeASupprimer.equals("99")){
 			return;
@@ -50,8 +49,7 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 				break;
 			}
 		}
-		
-		sc.close();
+	
 	}
 
 }
