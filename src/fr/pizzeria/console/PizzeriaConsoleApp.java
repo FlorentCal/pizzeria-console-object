@@ -1,11 +1,13 @@
 package fr.pizzeria.console;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import fr.pizzeria.dao.PizzaPersistenceMemoire;
+import fr.pizzeria.exception.DeletePizzaException;
+import fr.pizzeria.exception.SavePizzaException;
+import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.ihm.AjouterPizzaOptionMenu;
-import fr.pizzeria.ihm.ListerPizzasOptionMenu;
 import fr.pizzeria.ihm.ModifierPizzaOptionMenu;
 import fr.pizzeria.ihm.SupprimerPizzaOptionMenu;
 import fr.pizzeria.model.Pizza;
@@ -15,43 +17,24 @@ import fr.pizzeria.model.Pizza;
  * Classe main du projet
  */
 public class PizzeriaConsoleApp {
-	
-	// Scanner d'entrée
-	public static Scanner sc = new Scanner(System.in);
 		
 	/**
 	 * Méthode main
 	 * @param args
+	 * @throws DeletePizzaException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		// Choix de l'utilisateur dans le menu
 		int choix;
-		List<Pizza> pizzas = new ArrayList<>();
-		
-		// Instanciations des pizzas
-		Pizza peperoni = new Pizza("PEP", "Pépéroni", 12.50);
-		Pizza margherita = new Pizza("MAR", "Margherita", 14.00);
-		Pizza reine = new Pizza("REIN", "La Reine", 11.50);
-		Pizza fromage = new Pizza("FRO", "La 4 fromages", 12.00);
-		Pizza cannibale = new Pizza("CAN", "La cannibale", 12.50);
-		Pizza savoyarde = new Pizza("SAV", "La savoyarde", 13.00);
-		Pizza orientale = new Pizza("ORI", "L’orientale", 13.50);
-		Pizza indienne = new Pizza("IND", "L’indienne", 14.00);
+		// Scanner d'entrée
+		Scanner sc = new Scanner(System.in);
 			
-		pizzas.add(peperoni);
-		pizzas.add(margherita);
-		pizzas.add(reine);
-		pizzas.add(fromage);
-		pizzas.add(cannibale);
-		pizzas.add(savoyarde);
-		pizzas.add(orientale);
-		pizzas.add(indienne);
+		PizzaPersistenceMemoire dao = new PizzaPersistenceMemoire();
 		
-		ListerPizzasOptionMenu listerPizzas = new ListerPizzasOptionMenu(pizzas);
-		AjouterPizzaOptionMenu ajouterPizza = new AjouterPizzaOptionMenu(pizzas);
-		ModifierPizzaOptionMenu modifierPizza = new ModifierPizzaOptionMenu(pizzas);
-		SupprimerPizzaOptionMenu supprimerPizza = new SupprimerPizzaOptionMenu(pizzas);
+		AjouterPizzaOptionMenu ajouterPizza = new AjouterPizzaOptionMenu(dao);
+		ModifierPizzaOptionMenu modifierPizza = new ModifierPizzaOptionMenu(dao);
+		SupprimerPizzaOptionMenu supprimerPizza = new SupprimerPizzaOptionMenu(dao);
 		
 		// Affichage du menu
 		menu();
@@ -65,19 +48,31 @@ public class PizzeriaConsoleApp {
 			switch(choix){
 			// Si choix 1 : affichage des pizzas
 			case 1:
-				listerPizzas.execute(sc);
+				dao.findAllPizzas();
 				break;
 			// Si choix 2 : ajout d'une pizza
 			case 2:
-				ajouterPizza.execute(sc);	
+				try {
+					ajouterPizza.execute(sc);
+				} catch (SavePizzaException SPE) {
+					System.out.println(SPE.getMessage());
+				}	
 				break;
 			// Si choix 3 : Mise à jour d'une pizza
 			case 3:
-				modifierPizza.execute(sc);			
+				try {
+					modifierPizza.execute(sc);	
+				} catch (UpdatePizzaException UPE) {
+					System.out.println(UPE.getMessage());
+				}		
 				break;
 			// Si choix 4 : Suppression d'une pizza
 			case 4:
-				supprimerPizza.execute(sc);
+				try {
+					supprimerPizza.execute(sc);
+				} catch(DeletePizzaException DPE){
+					System.out.println(DPE.getMessage());
+				}
 				break;
 			case 5:
 				System.out.println("Nombre de pizzas : " + Pizza.getNombrePizzas());
@@ -89,8 +84,12 @@ public class PizzeriaConsoleApp {
 			}
 			
 			menu();
-			choix = sc.nextInt();			
-			
+			try {
+				choix = sc.nextInt();	
+			} catch(InputMismatchException IME){
+				System.out.println(IME.getStackTrace().toString());
+			}
+		
 		}
 		
 		// Sortie du programme

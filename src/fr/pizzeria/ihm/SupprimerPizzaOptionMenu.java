@@ -1,10 +1,9 @@
 package fr.pizzeria.ihm;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-import fr.pizzeria.model.Pizza;
+import fr.pizzeria.dao.PizzaPersistenceMemoire;
+import fr.pizzeria.exception.DeletePizzaException;
 
 /**
  * @author Florent Callaou
@@ -12,26 +11,23 @@ import fr.pizzeria.model.Pizza;
  *	Classe permettant de supprimer une pizza
  */
 public class SupprimerPizzaOptionMenu extends OptionMenu {
-
-	private List<Pizza> pizzas = new ArrayList<>();
-	private ListerPizzasOptionMenu lister;
-
+	
 	/**
 	 * Constructeur
 	 * @param pizzas : liste des pizzas commune
 	 */
-	public SupprimerPizzaOptionMenu(List<Pizza> pizzas) {
-		super();
-		this.pizzas = pizzas;
-		lister = new ListerPizzasOptionMenu(pizzas);
+	public SupprimerPizzaOptionMenu(PizzaPersistenceMemoire dao) {
+		super(dao);
 	}	
 
 	/**
 	 * Méthode de suppression d'une pizza
 	 */
-	public void execute(Scanner sc){
+	public void execute(Scanner sc) throws DeletePizzaException {
 		System.out.println("Suppression d’une pizza");
-		lister.execute(sc);
+		
+		dao.findAllPizzas();
+		
 		System.out.println("Veuillez entrer le code de la pizza à modifier");
 		System.out.println("(99 pour abandonner)");
 
@@ -42,13 +38,9 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 			return;
 		}
 
-		for (Pizza pizza : pizzas) {
-			// Si le code de la pizza parcourue est égal au code que l'utilisateur à renseigné, on supprim ela pizza
-			if(codeASupprimer.equals(pizza.getCode())){
-				pizzas.remove(pizza);	
-				break;
-			}
-		}
+		if(!dao.deletePizza(codeASupprimer)){
+			throw new DeletePizzaException("Code inconnu");
+		}	
 	
 	}
 
