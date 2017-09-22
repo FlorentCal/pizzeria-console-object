@@ -30,6 +30,8 @@ public class Pizza {
 	 */
 	private double prix;
 	
+	private CategoriePizza categorie;
+	
 	// Permet d'afficher les nombres avec 2 décimales
 	DecimalFormat df = new DecimalFormat("0.00");
 		
@@ -39,11 +41,12 @@ public class Pizza {
 	 * @param nom : Nom de la pizza 
 	 * @param prix : Prix de la pizza
 	 */
-	public Pizza(String code, String nom, double prix) {
+	public Pizza(String code, String nom, double prix, CategoriePizza categorie) {
 		super();
 		setCode(code);
 		setNom(nom);
 		setPrix(prix);
+		setCategorie(categorie);
 		setId(currentId);
 		currentId++;
 	}
@@ -79,13 +82,21 @@ public class Pizza {
 	public void setPrix(double prix) {
 		this.prix = prix;
 	}
+	
+	public CategoriePizza getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(CategoriePizza categorie) {
+		this.categorie = categorie;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return code + " -> " + nom + " (" + df.format(prix) + "€)";
+		return code + " -> " + nom + " (" + df.format(prix) + "€) [" + categorie.getCategorie() + "]";
 	}	
 
 }

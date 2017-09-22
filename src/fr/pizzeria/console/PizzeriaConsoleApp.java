@@ -6,6 +6,7 @@ import java.util.Scanner;
 import fr.pizzeria.dao.PizzaPersistenceMemoire;
 import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.exception.SavePizzaException;
+import fr.pizzeria.exception.UnknownPizzaCodeException;
 import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.ihm.AjouterPizzaOptionMenu;
 import fr.pizzeria.ihm.ModifierPizzaOptionMenu;
@@ -26,7 +27,7 @@ public class PizzeriaConsoleApp {
 	public static void main(String[] args) throws Exception {
 		
 		// Choix de l'utilisateur dans le menu
-		int choix;
+		int choix = 0;
 		// Scanner d'entrée
 		Scanner sc = new Scanner(System.in);
 			
@@ -36,15 +37,16 @@ public class PizzeriaConsoleApp {
 		ModifierPizzaOptionMenu modifierPizza = new ModifierPizzaOptionMenu(dao);
 		SupprimerPizzaOptionMenu supprimerPizza = new SupprimerPizzaOptionMenu(dao);
 		
-		// Affichage du menu
-		menu();
-	
-		// Récupération du choix
-		choix = sc.nextInt();
-		
 		// Tant que le choix n'est pas de sortir, on continue
 		while(choix != 99){
 			
+			menu();
+			try {
+				choix = sc.nextInt();	
+			} catch(InputMismatchException IME){
+				System.out.println("Entrez un nombre");
+			}
+					
 			switch(choix){
 			// Si choix 1 : affichage des pizzas
 			case 1:
@@ -56,7 +58,9 @@ public class PizzeriaConsoleApp {
 					ajouterPizza.execute(sc);
 				} catch (SavePizzaException SPE) {
 					System.out.println(SPE.getMessage());
-				}	
+				} catch (UnknownPizzaCodeException UPE){
+					System.out.println(UPE.getMessage());
+				}
 				break;
 			// Si choix 3 : Mise à jour d'une pizza
 			case 3:
@@ -64,7 +68,9 @@ public class PizzeriaConsoleApp {
 					modifierPizza.execute(sc);	
 				} catch (UpdatePizzaException UPE) {
 					System.out.println(UPE.getMessage());
-				}		
+				} catch (UnknownPizzaCodeException UPE){
+					System.out.println(UPE.getMessage());
+				}
 				break;
 			// Si choix 4 : Suppression d'une pizza
 			case 4:
@@ -83,14 +89,6 @@ public class PizzeriaConsoleApp {
 				break;
 			}
 			
-			menu();
-			try {
-				choix = sc.nextInt();	
-			} catch(InputMismatchException IME){
-				System.out.println(IME.getStackTrace().toString());
-				main(args);
-			}
-		
 		}
 		
 		// Sortie du programme

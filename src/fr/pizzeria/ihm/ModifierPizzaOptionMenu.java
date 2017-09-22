@@ -4,7 +4,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.PizzaPersistenceMemoire;
+import fr.pizzeria.exception.SavePizzaException;
+import fr.pizzeria.exception.UnknownPizzaCodeException;
 import fr.pizzeria.exception.UpdatePizzaException;
+import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -25,7 +28,7 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 	/**
 	 * Méthode de mise à jour d'une pizza
 	 */
-	public void execute(Scanner sc) throws UpdatePizzaException {
+	public void execute(Scanner sc) throws UpdatePizzaException, UnknownPizzaCodeException {
 		
 		System.out.println("Mise à jour d’une pizza");
 		
@@ -43,8 +46,22 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 		
 		System.out.println("Ajout d’une nouvelle pizza");
 		
+		System.out.println("Veuillez saisir la catégorie : ");
+		System.out.println("1. Viande");
+		System.out.println("2. Poisson");
+		System.out.println("3. Sans viande");
+		CategoriePizza categoriePizza;
+		int index = sc.nextInt();
+		if(index > 3 || index < 1) {
+			throw new UnknownPizzaCodeException("Code inconnu");
+		}
+		categoriePizza = CategoriePizza.getCategoriePizza(index);
+		
 		System.out.println("Veuillez saisir le code");
 		String codeTemp = sc.next();
+		if(codeTemp.length() > 3){
+			throw new UpdatePizzaException("Code trop long");
+		}
 		
 		System.out.println("Veuillez saisir le nom (sans espace)");
 		String nomTemp = sc.next();
@@ -53,7 +70,7 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 		double prixTemp = 0;
 		try {
 			prixTemp = sc.nextDouble();
-			if(!dao.updatePizza(codeAModifier, new Pizza(codeTemp, nomTemp, prixTemp))){
+			if(!dao.updatePizza(codeAModifier, new Pizza(codeTemp, nomTemp, prixTemp, categoriePizza))){
 				throw new UpdatePizzaException("Code inconnu");
 			}
 
