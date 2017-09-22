@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import fr.pizzeria.model.AjouterPizzaOptionMenu;
-import fr.pizzeria.model.ListerPizzasOptionMenu;
-import fr.pizzeria.model.ModifierPizzaOptionMenu;
+import fr.pizzeria.ihm.AjouterPizzaOptionMenu;
+import fr.pizzeria.ihm.ListerPizzasOptionMenu;
+import fr.pizzeria.ihm.ModifierPizzaOptionMenu;
+import fr.pizzeria.ihm.SupprimerPizzaOptionMenu;
 import fr.pizzeria.model.Pizza;
-import fr.pizzeria.model.SupprimerPizzaOptionMenu;
 
 /**
  * @author Florent Callaou

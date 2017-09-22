@@ -1,14 +1,25 @@
-package fr.pizzeria.model;
+package fr.pizzeria.ihm;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import fr.pizzeria.model.Pizza;
+
+/**
+ * @author Florent Callaou
+ * @see OptionMenu
+ *	Classe permettant d'ajouter une pizza
+ */
 public class AjouterPizzaOptionMenu extends OptionMenu {
 
 	private Scanner sc = new Scanner(System.in);
 	private List<Pizza> pizzas = new ArrayList<>();
 	
+	/**
+	 * Constructeur
+	 * @param pizzas : liste des pizzas commune
+	 */
 	public AjouterPizzaOptionMenu(List<Pizza> pizzas) {
 		super();
 		this.pizzas = pizzas;
@@ -16,7 +27,6 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 	
 	/**
 	 * Méthode d'ajout d'une pizza
-	 * @return la pizza à créer dans la liste
 	 */
 	public void execute(){
 		
@@ -32,7 +42,9 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 		double prixTemp = sc.nextDouble();
 		
 		pizzas.add(new Pizza(codeTemp, nomTemp, prixTemp));
+		sc.close();
 
 	}
+	
 	
 }

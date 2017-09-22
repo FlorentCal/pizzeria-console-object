@@ -8,8 +8,7 @@ import java.text.DecimalFormat;
  * Classe contenant les données d'une pizza
  */
 public class Pizza {
-	
-	
+		
 	/**
 	 * Identifiant unique de la pizz
 	 */
@@ -33,8 +32,7 @@ public class Pizza {
 	
 	// Permet d'afficher les nombres avec 2 décimales
 	DecimalFormat df = new DecimalFormat("0.00");
-	
-	
+		
 	/**
 	 * Constructeur d'une pizza
 	 * @param code : Code de la pizza
@@ -88,6 +86,10 @@ public class Pizza {
 	@Override
 	public String toString() {
 		return code + " -> " + nom + " (" + df.format(prix) + "€)";
+	}
+	
+	public int getNombrePizzas(){
+		return currentId - 1;
 	}
 
 

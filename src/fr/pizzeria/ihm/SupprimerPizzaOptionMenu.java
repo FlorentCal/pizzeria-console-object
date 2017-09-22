@@ -1,15 +1,26 @@
-package fr.pizzeria.model;
+package fr.pizzeria.ihm;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import fr.pizzeria.model.Pizza;
+
+/**
+ * @author Florent Callaou
+ * @see OptionMenu
+ *	Classe permettant de supprimer une pizza
+ */
 public class SupprimerPizzaOptionMenu extends OptionMenu {
 
 	private Scanner sc = new Scanner(System.in);
 	private List<Pizza> pizzas = new ArrayList<>();
 	private ListerPizzasOptionMenu lister;
 
+	/**
+	 * Constructeur
+	 * @param pizzas : liste des pizzas commune
+	 */
 	public SupprimerPizzaOptionMenu(List<Pizza> pizzas) {
 		super();
 		this.pizzas = pizzas;
@@ -19,7 +30,6 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 	/**
 	 * Méthode de suppression d'une pizza
 	 */
-
 	public void execute(){
 		System.out.println("Suppression d’une pizza");
 		lister.execute();
@@ -40,6 +50,8 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 				break;
 			}
 		}
+		
+		sc.close();
 	}
 
 }

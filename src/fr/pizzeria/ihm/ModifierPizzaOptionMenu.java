@@ -1,9 +1,16 @@
-package fr.pizzeria.model;
+package fr.pizzeria.ihm;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import fr.pizzeria.model.Pizza;
+
+/**
+ * @author Florent Callaou
+ * @see OptionMenu
+ *	Classe permettant de modifier une pizza
+ */
 public class ModifierPizzaOptionMenu extends OptionMenu {
 
 	private Scanner sc = new Scanner(System.in);
@@ -11,6 +18,10 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 	
 	private ListerPizzasOptionMenu lister;
 
+	/**
+	 * Constructeur
+	 * @param pizzas : liste des pizzas commune
+	 */
 	public ModifierPizzaOptionMenu(List<Pizza> pizzas) {
 		super();
 		this.pizzas = pizzas;
@@ -56,6 +67,7 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 				break;
 			}
 		}
+		sc.close();
 	}
 	
 }
