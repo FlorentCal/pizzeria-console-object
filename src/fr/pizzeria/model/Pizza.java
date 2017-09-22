@@ -86,14 +86,6 @@ public class Pizza {
 	@Override
 	public String toString() {
 		return code + " -> " + nom + " (" + df.format(prix) + "€)";
-	}
-	
-	public static int getNombrePizzas(){
-		return currentId;
-	}
-
-
-	
-	
+	}	
 
 }

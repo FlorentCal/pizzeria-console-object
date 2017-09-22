@@ -10,7 +10,7 @@ import fr.pizzeria.dao.PizzaPersistenceMemoire;
  */
 public abstract class OptionMenu {
 	
-	PizzaPersistenceMemoire dao = new PizzaPersistenceMemoire();
+	PizzaPersistenceMemoire dao = PizzaPersistenceMemoire.getInstance();
 	
 	/**
 	 * Constructeur

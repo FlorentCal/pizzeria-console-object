@@ -30,7 +30,7 @@ public class PizzeriaConsoleApp {
 		// Scanner d'entrée
 		Scanner sc = new Scanner(System.in);
 			
-		PizzaPersistenceMemoire dao = new PizzaPersistenceMemoire();
+		PizzaPersistenceMemoire dao = PizzaPersistenceMemoire.getInstance();
 		
 		AjouterPizzaOptionMenu ajouterPizza = new AjouterPizzaOptionMenu(dao);
 		ModifierPizzaOptionMenu modifierPizza = new ModifierPizzaOptionMenu(dao);
@@ -75,7 +75,7 @@ public class PizzeriaConsoleApp {
 				}
 				break;
 			case 5:
-				System.out.println("Nombre de pizzas : " + Pizza.getNombrePizzas());
+				System.out.println("Nombre de pizzas : " + dao.getNombrePizzas());
 				break;
 			// Sinon : Mauvaise entrée
 			default:
@@ -88,6 +88,7 @@ public class PizzeriaConsoleApp {
 				choix = sc.nextInt();	
 			} catch(InputMismatchException IME){
 				System.out.println(IME.getStackTrace().toString());
+				main(args);
 			}
 		
 		}

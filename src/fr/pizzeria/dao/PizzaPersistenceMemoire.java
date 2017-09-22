@@ -7,6 +7,8 @@ import fr.pizzeria.model.Pizza;
 
 public class PizzaPersistenceMemoire implements IPizzaDao {
 
+	
+	private static PizzaPersistenceMemoire instanceUnique = null;
 	private List<Pizza> pizzas = new ArrayList<>();
 
 	// Instanciations des pizzas
@@ -19,6 +21,22 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 	Pizza orientale = new Pizza("ORI", "L’orientale", 13.50);
 	Pizza indienne = new Pizza("IND", "L’indienne", 14.00);
 	
+	/**
+	 * Constructeur
+	 * @param pizzas : liste des pizzas commune
+	 */
+	protected PizzaPersistenceMemoire() {
+		super();
+		addPizzas();
+	}
+	
+	public static PizzaPersistenceMemoire getInstance(){
+		if(instanceUnique == null){
+			instanceUnique = new PizzaPersistenceMemoire();
+		}
+		return instanceUnique;
+	}
+	
 	private void addPizzas(){
 		pizzas.add(peperoni);
 		pizzas.add(margherita);
@@ -30,14 +48,6 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 		pizzas.add(indienne);
 	}
 	
-	/**
-	 * Constructeur
-	 * @param pizzas : liste des pizzas commune
-	 */
-	public PizzaPersistenceMemoire() {
-		super();
-		addPizzas();
-	}
 
 	@Override
 	public List<Pizza> findAllPizzas() {
@@ -83,6 +93,10 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 			}
 		}
 		return false;
+	}
+	
+	public int getNombrePizzas(){
+		return pizzas.size();
 	}
 
 }
