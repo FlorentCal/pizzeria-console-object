@@ -13,7 +13,6 @@ public class StringUtils {
 	// Permet d'afficher les nombres avec 2 décimales
 	static DecimalFormat df = new DecimalFormat("0.00");
 
-	
 	/**
 	 * Méthode de paramétrage d'affichage d'un objet
 	 * @param o : l'objet à manipuler
@@ -40,25 +39,20 @@ public class StringUtils {
 			}
 			// Si la valeur est différent de null et qu'on lui a annoté ToString : on l'affiche 
 			if (value != null && field.isAnnotationPresent(ToString.class)) {
+
+				Object finalValue = field.getAnnotation(ToString.class).separator().replaceAll("#val", value.toString());
 				// Vérification du paramètre de ToString
 				if(field.getAnnotation(ToString.class).decimalFormat()){
-					builder.append(df.format(value));
-					builder.append(" €) [");
-				}else {
-					// Vérification du paramètre de ToString
-					if(field.getAnnotation(ToString.class).uppercase()){
-						builder.append(value.toString().toUpperCase());
-					} else {
-						builder.append(value);
-					}
-				}					
-				if(name.equals("code")){
-					builder.append(" -> ");
-				} else if(name.equals("nom")){
-					builder.append(" (");
-				} else if(name.equals("categorie")){
-					builder.append("]");
-				}		
+					finalValue = df.format(value);
+					finalValue = field.getAnnotation(ToString.class).separator().replaceAll("#val", finalValue.toString());
+				}
+				// Vérification du paramètre de ToString
+				if(field.getAnnotation(ToString.class).uppercase()){
+					builder.append(finalValue.toString().toUpperCase());
+				} else {
+					builder.append(finalValue);
+				}
+
 			}
 		}
 		return builder.toString();

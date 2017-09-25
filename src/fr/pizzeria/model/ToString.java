@@ -11,5 +11,6 @@ public @interface ToString {
 	
 	 boolean uppercase() default false;
 	 boolean decimalFormat() default false;
+	 String separator() default "";
 	 
 }

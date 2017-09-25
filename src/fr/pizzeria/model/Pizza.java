@@ -17,20 +17,20 @@ public class Pizza {
 	/**
 	 * Code de la pizza
 	 */
-	@ToString(uppercase = true)
+	@ToString(uppercase = true, separator = "#val ->")
 	private String code;
 	/**
 	 * Nom de la pizza 
 	 */
-	@ToString(uppercase = true)
+	@ToString(uppercase = true, separator = " #val")
 	private String nom;
 	/**
 	 * Prix de la pizza
 	 */
-	@ToString(decimalFormat = true)
+	@ToString(decimalFormat = true, separator = " (#val€)")
 	private double prix;
 
-	@ToString
+	@ToString(separator = " [#val]")
 	private CategoriePizza categorie;
 
 	/**
