@@ -11,8 +11,6 @@ import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.ihm.AjouterPizzaOptionMenu;
 import fr.pizzeria.ihm.ModifierPizzaOptionMenu;
 import fr.pizzeria.ihm.SupprimerPizzaOptionMenu;
-import fr.pizzeria.model.Pizza;
-
 /**
  * @author Florent Callaou
  * Classe main du projet

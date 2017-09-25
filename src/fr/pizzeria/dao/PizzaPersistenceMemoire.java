@@ -49,7 +49,6 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 		pizzas.add(indienne);
 	}
 	
-
 	@Override
 	public List<Pizza> findAllPizzas() {
 		System.out.println("Liste des pizzas : ");

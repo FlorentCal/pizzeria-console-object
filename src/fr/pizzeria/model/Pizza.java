@@ -1,16 +1,13 @@
 package fr.pizzeria.model;
 
-import java.text.DecimalFormat;
-
-
 /**
  * @author Florent Callaou
  * Classe contenant les données d'une pizza
  */
 public class Pizza {
-		
+
 	/**
-	 * Identifiant unique de la pizz
+	 * Identifiant unique de la pizza
 	 */
 	private int id;
 	/**
@@ -20,21 +17,22 @@ public class Pizza {
 	/**
 	 * Code de la pizza
 	 */
+	@ToString(uppercase = true)
 	private String code;
 	/**
 	 * Nom de la pizza 
 	 */
+	@ToString(uppercase = true)
 	private String nom;
 	/**
 	 * Prix de la pizza
 	 */
+	@ToString(decimalFormat = true)
 	private double prix;
-	
+
+	@ToString
 	private CategoriePizza categorie;
-	
-	// Permet d'afficher les nombres avec 2 décimales
-	DecimalFormat df = new DecimalFormat("0.00");
-		
+
 	/**
 	 * Constructeur d'une pizza
 	 * @param code : Code de la pizza
@@ -50,7 +48,7 @@ public class Pizza {
 		setId(currentId);
 		currentId++;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -82,7 +80,7 @@ public class Pizza {
 	public void setPrix(double prix) {
 		this.prix = prix;
 	}
-	
+
 	public CategoriePizza getCategorie() {
 		return categorie;
 	}
@@ -95,8 +93,9 @@ public class Pizza {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString() {
-		return code + " -> " + nom + " (" + df.format(prix) + "€) [" + categorie.getCategorie() + "]";
+	public String toString() {	
+		return StringUtils.convert(this);
 	}	
+
 
 }

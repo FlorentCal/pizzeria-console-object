@@ -4,7 +4,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.PizzaPersistenceMemoire;
-import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.exception.UnknownPizzaCodeException;
 import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.model.CategoriePizza;
@@ -23,7 +22,7 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 	 */
 	public ModifierPizzaOptionMenu(PizzaPersistenceMemoire dao) {
 		super(dao);
-	}	
+	}
 		
 	/**
 	 * Méthode de mise à jour d'une pizza
