@@ -2,6 +2,7 @@ package fr.pizzeria.ihm;
 
 import java.util.Scanner;
 
+import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.dao.PizzaPersistenceMemoire;
 
 /**
@@ -10,7 +11,8 @@ import fr.pizzeria.dao.PizzaPersistenceMemoire;
  */
 public abstract class OptionMenu {
 	
-	PizzaPersistenceMemoire dao = PizzaPersistenceMemoire.getInstance();
+	protected IPizzaDao dao = PizzaPersistenceMemoire.getInstance();
+	//PizzaPersistenceMemoire dao = PizzaPersistenceMemoire.getInstance();
 	
 	/**
 	 * Constructeur

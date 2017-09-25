@@ -27,8 +27,6 @@ public class StringUtils {
 		for (Field field : fields) {
 			// Pour pouvoir laisser les modifiers à private (Sinon : IllegalAccessException)
 			field.setAccessible(true);
-			// Nom de l'attribut
-			String name = field.getName();
 			// Valeur de l'attribut
 			Object value = null;
 			try {

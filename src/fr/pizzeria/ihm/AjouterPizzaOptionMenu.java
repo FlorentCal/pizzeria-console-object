@@ -40,7 +40,7 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 		if(index > 3 || index < 1) {
 			throw new UnknownPizzaCodeException("Code inconnu");
 		}
-		categoriePizza = CategoriePizza.getCategoriePizza(sc.nextInt());
+		categoriePizza = CategoriePizza.getCategoriePizza(index);
 		
 		System.out.println("Veuillez saisir le code");
 		String codeTemp = sc.next();
