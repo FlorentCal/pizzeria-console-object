@@ -1,5 +1,6 @@
 package fr.pizzeria.ihm;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.PizzaPersistenceMemoire;
@@ -22,8 +23,9 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 
 	/**
 	 * Méthode de suppression d'une pizza
+	 * @throws IOException 
 	 */
-	public void execute(Scanner sc) throws DeletePizzaException {
+	public void execute(Scanner sc) throws DeletePizzaException, IOException {
 		System.out.println("Suppression d’une pizza");
 		
 		dao.findAllPizzas();

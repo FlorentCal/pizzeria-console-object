@@ -1,6 +1,7 @@
 package fr.pizzeria.ihm;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -27,9 +28,9 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 		
 	/**
 	 * Méthode de mise à jour d'une pizza
-	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	public void execute(Scanner sc) throws UpdatePizzaException, UnknownPizzaCodeException, FileNotFoundException {
+	public void execute(Scanner sc) throws UpdatePizzaException, UnknownPizzaCodeException, IOException {
 		
 		System.out.println("Mise à jour d’une pizza");
 		

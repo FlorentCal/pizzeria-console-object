@@ -1,5 +1,6 @@
 package fr.pizzeria.ihm;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -26,8 +27,9 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 	
 	/**
 	 * Méthode d'ajout d'une pizza
+	 * @throws IOException 
 	 */
-	public void execute(Scanner sc) throws SavePizzaException, UnknownPizzaCodeException {
+	public void execute(Scanner sc) throws SavePizzaException, UnknownPizzaCodeException, IOException {
 		
 		System.out.println("Ajout d’une nouvelle pizza");
 		
