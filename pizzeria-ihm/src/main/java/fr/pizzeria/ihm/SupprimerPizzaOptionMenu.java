@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.IPizzaDao;
-import fr.pizzeria.dao.PizzaPersistenceMemoire;
 import fr.pizzeria.exception.DeletePizzaException;
 
 /**

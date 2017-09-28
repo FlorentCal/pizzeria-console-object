@@ -4,8 +4,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.IPizzaDao;
-import fr.pizzeria.dao.PizzaPersistenceFichier;
-import fr.pizzeria.dao.PizzaPersistenceMemoire;
 import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.exception.UnknownPizzaCodeException;
@@ -31,7 +29,9 @@ public class PizzeriaConsoleApp {
 		// Scanner d'entrée
 		Scanner sc = new Scanner(System.in);
 			
-		IPizzaDao dao = PizzaPersistenceFichier.getInstance();
+		//IPizzaDao dao = PizzaPersistenceFichier.getInstance();
+		Class.forName("fr.pizzeria.dao.IPizzaDao").newInstance();
+		IPizzaDao dao = (IPizzaDao) Class.forName("fr.pizzeria.dao.PizzaPersistenceMemoire").newInstance();
 		
 		AjouterPizzaOptionMenu ajouterPizza = new AjouterPizzaOptionMenu(dao);
 		ModifierPizzaOptionMenu modifierPizza = new ModifierPizzaOptionMenu(dao);

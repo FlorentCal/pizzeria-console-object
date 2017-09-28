@@ -3,7 +3,6 @@ package fr.pizzeria.ihm;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.IPizzaDao;
-import fr.pizzeria.dao.PizzaPersistenceMemoire;
 
 /**
  * @author Florent Callaou
@@ -11,8 +10,7 @@ import fr.pizzeria.dao.PizzaPersistenceMemoire;
  */
 public abstract class OptionMenu {
 	
-	protected IPizzaDao dao = PizzaPersistenceMemoire.getInstance();
-	//PizzaPersistenceMemoire dao = PizzaPersistenceMemoire.getInstance();
+	protected IPizzaDao dao;
 	
 	/**
 	 * Constructeur
