@@ -3,6 +3,7 @@ package fr.pizzeria.ihm;
 import java.io.IOException;
 import java.util.Scanner;
 
+import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.dao.PizzaPersistenceMemoire;
 import fr.pizzeria.exception.DeletePizzaException;
 
@@ -17,15 +18,16 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 	 * Constructeur
 	 * @param pizzas : liste des pizzas commune
 	 */
-	public SupprimerPizzaOptionMenu(PizzaPersistenceMemoire dao) {
+	public SupprimerPizzaOptionMenu(IPizzaDao dao) {
 		super(dao);
 	}	
 
 	/**
 	 * Méthode de suppression d'une pizza
 	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void execute(Scanner sc) throws DeletePizzaException, IOException {
+	public void execute(Scanner sc) throws DeletePizzaException, IOException, ClassNotFoundException {
 		System.out.println("Suppression d’une pizza");
 		
 		dao.findAllPizzas();

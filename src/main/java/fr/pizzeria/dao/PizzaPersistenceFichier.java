@@ -3,24 +3,22 @@ package fr.pizzeria.dao;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
-import jdk.jfr.events.FileWriteEvent;
 
 public class PizzaPersistenceFichier implements IPizzaDao {
 
 	private static PizzaPersistenceFichier instanceUnique = null;
 	private List<Pizza> pizzas = new ArrayList<>();
-	private BufferedReader bufferReader;
-	private BufferedWriter bufferWriter;
+	private BufferedReader bufferedReader;
+	private BufferedWriter bufferedWriter;
 	
 	/**
 	 * Constructeur
@@ -37,10 +35,10 @@ public class PizzaPersistenceFichier implements IPizzaDao {
 		return instanceUnique;
 	}
 
-	private void loadFile() throws IOException{
-		File file = new File("C:/Users/ETY1/git/pizzeria-console-object/ressources/saveFile");
+	private void loadFile() throws IOException, ClassNotFoundException{
+		File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\saveFile.txt");
 		FileReader reader = new FileReader(file);
-		bufferReader = new BufferedReader(reader);
+		bufferedReader = new BufferedReader(reader);
 		String line = null;
 		String code = null;
 		String name = null;
@@ -48,7 +46,7 @@ public class PizzaPersistenceFichier implements IPizzaDao {
 		String categorie = null;
 		String[] splittedLine;
 		
-		line =  bufferReader.readLine();
+		line =  bufferedReader.readLine();
 		while(line != null){
 			splittedLine = line.split(";");
 			
@@ -59,15 +57,15 @@ public class PizzaPersistenceFichier implements IPizzaDao {
 			
 			pizzas.add(new Pizza(code, name, prix, CategoriePizza.valueOf(categorie)));
 			
-			line = bufferReader.readLine();
+			line = bufferedReader.readLine();
 			
 		}
 		reader.close();
-		bufferReader.close();
+		bufferedReader.close();
 	}
 	
 	@Override
-	public List<Pizza> findAllPizzas() throws IOException {
+	public List<Pizza> findAllPizzas() throws IOException, ClassNotFoundException {
 		loadFile();
 		for (Pizza pizza : pizzas) {
 			System.out.println(pizza.toString());;
@@ -83,9 +81,9 @@ public class PizzaPersistenceFichier implements IPizzaDao {
 			}
 		}
 		
-		File file = new File("C:/Users/ETY1/git/pizzeria-console-object/ressources/saveFile");
+		File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\saveFile.txt");
 		FileWriter writer = new FileWriter(file);
-		bufferWriter = new BufferedWriter(writer);
+		bufferedWriter = new BufferedWriter(writer);
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(pizzaToAdd.getCode() + ";");
@@ -93,7 +91,11 @@ public class PizzaPersistenceFichier implements IPizzaDao {
 		sb.append(pizzaToAdd.getPrix() + ";");
 		sb.append(pizzaToAdd.getCategorie());
 		
-		bufferWriter.append(sb.toString());
+		//bufferedWriter.write(sb.toString());
+		//bufferedWriter.newLine(); 
+		bufferedWriter.flush();
+		bufferedWriter.newLine();
+		bufferedWriter.append(sb.toString());
 		
 //		writer.close();
 //		bufferWriter.close();

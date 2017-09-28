@@ -7,7 +7,7 @@ import fr.pizzeria.model.Pizza;
 
 public interface IPizzaDao {
 
-	List<Pizza> findAllPizzas() throws IOException;
+	List<Pizza> findAllPizzas() throws IOException, ClassNotFoundException;
 	boolean saveNewPizza(Pizza pizza) throws IOException;
 	boolean updatePizza(String codePizza, Pizza pizza);
 	boolean deletePizza(String codePizza);
