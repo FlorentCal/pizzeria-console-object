@@ -9,7 +9,7 @@ import fr.pizzeria.model.Pizza;
 public class PizzaPersistenceMemoire implements IPizzaDao {
 
 	
-	private static PizzaPersistenceMemoire instanceUnique = null;
+//	private static PizzaPersistenceMemoire instanceUnique = null;
 	private List<Pizza> pizzas = new ArrayList<>();
 
 	// Instanciations des pizzas
@@ -26,17 +26,17 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 	 * Constructeur
 	 * @param pizzas : liste des pizzas commune
 	 */
-	protected PizzaPersistenceMemoire() {
+	public PizzaPersistenceMemoire() {
 		super();
 		addPizzas();
 	}
 	
-	public static PizzaPersistenceMemoire getInstance(){
-		if(instanceUnique == null){
-			instanceUnique = new PizzaPersistenceMemoire();
-		}
-		return instanceUnique;
-	}
+//	public static PizzaPersistenceMemoire getInstance(){
+//		if(instanceUnique == null){
+//			instanceUnique = new PizzaPersistenceMemoire();
+//		}
+//		return instanceUnique;
+//	}
 	
 	private void addPizzas(){
 		pizzas.add(peperoni);

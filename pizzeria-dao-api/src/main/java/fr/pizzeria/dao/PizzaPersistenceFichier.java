@@ -14,7 +14,7 @@ import fr.pizzeria.model.Pizza;
 
 public class PizzaPersistenceFichier implements IPizzaDao {
 
-	private static PizzaPersistenceFichier instanceUnique = null;
+//	private static PizzaPersistenceFichier instanceUnique = null;
 	private List<Pizza> pizzas = new ArrayList<>();
 	private BufferedReader bufferedReader;
 	private BufferedWriter bufferedWriter;
@@ -23,16 +23,16 @@ public class PizzaPersistenceFichier implements IPizzaDao {
 	 * Constructeur
 	 * @param pizzas : liste des pizzas commune
 	 */
-	protected PizzaPersistenceFichier() {
+	public PizzaPersistenceFichier() {
 		super();
 	}
 	
-	public static PizzaPersistenceFichier getInstance(){
-		if(instanceUnique == null){
-			instanceUnique = new PizzaPersistenceFichier();
-		}
-		return instanceUnique;
-	}
+//	public static PizzaPersistenceFichier getInstance(){
+//		if(instanceUnique == null){
+//			instanceUnique = new PizzaPersistenceFichier();
+//		}
+//		return instanceUnique;
+//	}
 
 	private void loadFile() throws IOException, ClassNotFoundException{
 		File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\saveFile.txt");

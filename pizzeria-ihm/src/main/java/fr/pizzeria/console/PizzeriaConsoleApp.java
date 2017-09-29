@@ -30,7 +30,6 @@ public class PizzeriaConsoleApp {
 		Scanner sc = new Scanner(System.in);
 			
 		//IPizzaDao dao = PizzaPersistenceFichier.getInstance();
-		Class.forName("fr.pizzeria.dao.IPizzaDao").newInstance();
 		IPizzaDao dao = (IPizzaDao) Class.forName("fr.pizzeria.dao.PizzaPersistenceMemoire").newInstance();
 		
 		AjouterPizzaOptionMenu ajouterPizza = new AjouterPizzaOptionMenu(dao);
