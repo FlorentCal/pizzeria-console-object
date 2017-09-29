@@ -3,13 +3,17 @@ package fr.pizzeria.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.pizzeria.exception.DeletePizzaException;
+import fr.pizzeria.exception.SavePizzaException;
+import fr.pizzeria.exception.StockageException;
+import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 public class PizzaPersistenceMemoire implements IPizzaDao {
 
-	
-//	private static PizzaPersistenceMemoire instanceUnique = null;
+
+	//	private static PizzaPersistenceMemoire instanceUnique = null;
 	private List<Pizza> pizzas = new ArrayList<>();
 
 	// Instanciations des pizzas
@@ -21,7 +25,7 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 	Pizza savoyarde = new Pizza("SAV", "La savoyarde", 13.00, CategoriePizza.VIANDE);
 	Pizza orientale = new Pizza("ORI", "L’orientale", 13.50, CategoriePizza.VIANDE);
 	Pizza indienne = new Pizza("IND", "L’indienne", 14.00, CategoriePizza.VIANDE);
-	
+
 	/**
 	 * Constructeur
 	 * @param pizzas : liste des pizzas commune
@@ -30,14 +34,14 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 		super();
 		addPizzas();
 	}
-	
-//	public static PizzaPersistenceMemoire getInstance(){
-//		if(instanceUnique == null){
-//			instanceUnique = new PizzaPersistenceMemoire();
-//		}
-//		return instanceUnique;
-//	}
-	
+
+	//	public static PizzaPersistenceMemoire getInstance(){
+	//		if(instanceUnique == null){
+	//			instanceUnique = new PizzaPersistenceMemoire();
+	//		}
+	//		return instanceUnique;
+	//	}
+
 	private void addPizzas(){
 		pizzas.add(peperoni);
 		pizzas.add(margherita);
@@ -48,53 +52,66 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 		pizzas.add(orientale);
 		pizzas.add(indienne);
 	}
-	
+
 	@Override
 	public List<Pizza> findAllPizzas() {
-		System.out.println("Liste des pizzas : ");
-		for (Pizza pizza : pizzas) {
-			System.out.println(pizza.toString());;
-		}
-		return null;
+		return pizzas;
 	}
 
 	@Override
-	public boolean saveNewPizza(Pizza pizzaToAdd) {
-		for (Pizza pizza : pizzas) {
-			if(pizza.getCode().equals(pizzaToAdd.getCode())){
-				return false;
-			}
-		}
+	public void saveNewPizza(Pizza pizzaToAdd) throws StockageException {
+		
+		verifyAdd(pizzaToAdd);
+		
 		pizzas.add(pizzaToAdd);
-		return true;
 	}
 
 	@Override
-	public boolean updatePizza(String codePizza, Pizza pizzaUpdated) {
+	public void updatePizza(String codePizza, Pizza pizzaUpdated) throws StockageException {
+		
+		verifyCodeLenght(pizzaUpdated.getCode());
+		
 		for (Pizza pizza : pizzas) {
 			// Si le code de la pizza parcourue est égal au code que l'utilisateur à renseigné, on met à jour la pizza de la liste
 			if(codePizza.equals(pizza.getCode())){
 				pizza.setCode(pizzaUpdated.getCode().toUpperCase());
 				pizza.setNom(pizzaUpdated.getNom());
 				pizza.setPrix(pizzaUpdated.getPrix());		
-				return true;
+				return;
 			}
 		}
-		return false;
+		throw new UpdatePizzaException("Code inconnu");
 	}
 
 	@Override
-	public boolean deletePizza(String codePizza) {
+	public void deletePizza(String codePizza) throws DeletePizzaException {
 		for (Pizza pizza : pizzas) {
 			// Si le code de la pizza parcourue est égal au code que l'utilisateur à renseigné, on supprime la pizza
 			if(codePizza.equals(pizza.getCode())){
 				pizzas.remove(pizza);	
-				return true;
+				return;
 			}
 		}
-		return false;
+		throw new DeletePizzaException("Code inconnu");
 	}
-	
+	private void verifyAdd(Pizza pizzaToAdd) throws StockageException{
+		verifyCodeLenght(pizzaToAdd.getCode());
+		if(pizzaToAdd.getCode().length() > 3){
+			throw new SavePizzaException("Code trop long (3 caractères autorisés)");
+		}
+		for (Pizza pizza : pizzas) {
+			if(pizza.getCode().equals(pizzaToAdd.getCode())){
+				throw new SavePizzaException("Code déjà existant");
+			}
+		}
+	}
+
+	private void verifyCodeLenght(String code) throws StockageException{
+		if(code.length() > 3){
+			throw new StockageException("Code trop long (3 caractères autorisés)");
+		}
+	}
+
 	public int getNombrePizzas(){
 		return pizzas.size();
 	}

@@ -3,9 +3,11 @@ package fr.pizzeria.ihm;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.SavePizzaException;
+import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.exception.UnknownPizzaCodeException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
@@ -17,6 +19,8 @@ import fr.pizzeria.model.Pizza;
  */
 public class AjouterPizzaOptionMenu extends OptionMenu {
 	
+	private static Logger LOG = Logger.getAnonymousLogger();
+	
 	/**
 	 * Constructeur
 	 * @param pizzas : liste des pizzas commune
@@ -27,16 +31,18 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 	
 	/**
 	 * Méthode d'ajout d'une pizza
+	 * @throws StockageException 
 	 * @throws IOException 
 	 */
-	public void execute(Scanner sc) throws SavePizzaException, UnknownPizzaCodeException, IOException {
+	public void execute(Scanner sc) throws StockageException {
 		
-		System.out.println("Ajout d’une nouvelle pizza");
+		LOG.info("Ajout d’une nouvelle pizza");
 		
-		System.out.println("Veuillez saisir la catégorie : ");
-		System.out.println("1. Viande");
-		System.out.println("2. Poisson");
-		System.out.println("3. Sans viande");
+		LOG.info("Veuillez saisir la catégorie : ");
+		LOG.info("1. Viande");
+		LOG.info("2. Poisson");
+		LOG.info("3. Sans viande");
+	
 		CategoriePizza categoriePizza = null;
 		int index = sc.nextInt();
 		if(index > 3 || index < 1) {
@@ -44,24 +50,19 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 		}
 		categoriePizza = CategoriePizza.getCategoriePizza(index);
 		
-		System.out.println("Veuillez saisir le code");
+		LOG.info("Veuillez saisir le code");
 		String codeTemp = sc.next();
-		if(codeTemp.length() > 3){
-			throw new SavePizzaException("Code trop long");
-		}
 		
-		System.out.println("Veuillez saisir le nom (sans espace)");
+		LOG.info("Veuillez saisir le nom (sans espace)");
 		String nomTemp = sc.next();
 		
-		System.out.println("Veuillez saisir le prix (Avec une virgule pour les décimales)");
+		LOG.info("Veuillez saisir le prix (Avec une virgule pour les décimales)");
 		double prixTemp = 0;
 		try {
 			prixTemp = sc.nextDouble();	
-			if(!dao.saveNewPizza(new Pizza(codeTemp.toUpperCase(), nomTemp, prixTemp, categoriePizza))){
-				throw new SavePizzaException("Code déjà existant");
-			}
-		} catch (InputMismatchException ime){
-			System.out.println("Entrez un nombre");
+			dao.saveNewPizza(new Pizza(codeTemp.toUpperCase(), nomTemp, prixTemp, categoriePizza));
+		} catch (InputMismatchException | SavePizzaException e){
+			LOG.info(e.getMessage());
 		}
 			
 	}

@@ -5,6 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.IPizzaDao;
+import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.exception.UnknownPizzaCodeException;
 //import fr.pizzeria.dao.PizzaPersistenceMemoire;
 import fr.pizzeria.exception.UpdatePizzaException;
@@ -48,37 +49,35 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 		}
 		
 		System.out.println("Ajout d’une nouvelle pizza");
-		
-		System.out.println("Veuillez saisir la catégorie : ");
-		System.out.println("1. Viande");
-		System.out.println("2. Poisson");
-		System.out.println("3. Sans viande");
+
 		CategoriePizza categoriePizza;
-		int index = sc.nextInt();
-		if(index > 3 || index < 1) {
-			throw new UnknownPizzaCodeException("Code inconnu");
+		int index = -1;
+		while(index > 3 || index < 1){
+			System.out.println("Veuillez saisir la catégorie : ");
+			System.out.println("1. Viande");
+			System.out.println("2. Poisson");
+			System.out.println("3. Sans viande");
+			index = sc.nextInt();
+			if(index > 3 || index < 1) {
+				System.out.println("Code inconnu (Code valable : 1, 2, 3");
+			}
 		}
 		categoriePizza = CategoriePizza.getCategoriePizza(index);
 		
-		System.out.println("Veuillez saisir le code");
+		System.out.println("Veuillez saisir le code de la nouvelle pizza");
 		String codeTemp = sc.next();
-		if(codeTemp.length() > 3){
-			throw new UpdatePizzaException("Code trop long");
-		}
 		
-		System.out.println("Veuillez saisir le nom (sans espace)");
+		System.out.println("Veuillez saisir le nom de la nouvelle pizza (sans espace)");
 		String nomTemp = sc.next();
 		
-		System.out.println("Veuillez saisir le prix (Avec une virgule pour les décimales)");
+		System.out.println("Veuillez saisir le prix de la nouvelle pizza (avec une virgule pour les décimales)");
 		double prixTemp = 0;
 		try {
 			prixTemp = sc.nextDouble();
-			if(!dao.updatePizza(codeAModifier, new Pizza(codeTemp, nomTemp, prixTemp, categoriePizza))){
-				throw new UpdatePizzaException("Code inconnu");
-			}
+			dao.updatePizza(codeAModifier, new Pizza(codeTemp, nomTemp, prixTemp, categoriePizza));
 
-		} catch (InputMismatchException ime){
-			System.out.println(ime.getStackTrace().toString());
+		} catch (InputMismatchException | StockageException e){
+			System.out.println(e.getMessage());
 		}
 				
 		

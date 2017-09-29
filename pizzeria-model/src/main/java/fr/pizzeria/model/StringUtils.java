@@ -37,7 +37,7 @@ public class StringUtils {
 				// Récupération de la valeur
 				value = field.get(o);
 			} catch (IllegalArgumentException | IllegalAccessException e1) {
-				e1.printStackTrace();
+				e1.getMessage();
 			}
 			// Si la valeur est différent de null et qu'on lui a annoté ToString : on l'affiche 
 			if (value != null && field.isAnnotationPresent(ToString.class)) {

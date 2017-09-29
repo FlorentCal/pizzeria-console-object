@@ -10,6 +10,21 @@ public class UnknownPizzaCodeException extends StockageException {
 	public UnknownPizzaCodeException(String msg) {
 		super(msg);
 	}
+
+	public UnknownPizzaCodeException() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public UnknownPizzaCodeException(String arg0, Throwable arg1) {
+		super(arg0, arg1);
+		// TODO Auto-generated constructor stub
+	}
+
+	public UnknownPizzaCodeException(Throwable arg0) {
+		super(arg0);
+		// TODO Auto-generated constructor stub
+	}
 	
 
 }

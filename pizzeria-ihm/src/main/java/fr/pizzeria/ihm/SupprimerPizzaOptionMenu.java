@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.IPizzaDao;
-import fr.pizzeria.exception.DeletePizzaException;
+import fr.pizzeria.exception.StockageException;
 
 /**
  * @author Florent Callaou
@@ -25,8 +25,9 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 	 * Méthode de suppression d'une pizza
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
+	 * @throws StockageException 
 	 */
-	public void execute(Scanner sc) throws DeletePizzaException, IOException, ClassNotFoundException {
+	public void execute(Scanner sc) throws IOException, ClassNotFoundException, StockageException {
 		System.out.println("Suppression d’une pizza");
 		
 		dao.findAllPizzas();
@@ -41,10 +42,13 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 			return;
 		}
 
-		if(!dao.deletePizza(codeASupprimer)){
-			throw new DeletePizzaException("Code inconnu");
-		}	
-	
+		try {
+			dao.deletePizza(codeASupprimer);
+
+		} catch (StockageException e){
+			System.out.println(e.getMessage());
+		}
+		
 	}
 
 }
