@@ -35,6 +35,5 @@
 		<module>pizzeria-model</module>
 		<module>pizzeria-dao-api</module>
 		<module>pizzeria-ihm</module>
-		<module>pizzeria-exception</module>
 	</modules>
 </project>
