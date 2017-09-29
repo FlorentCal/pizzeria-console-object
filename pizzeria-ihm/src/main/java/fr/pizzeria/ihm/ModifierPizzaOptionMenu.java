@@ -77,8 +77,8 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 				throw new UpdatePizzaException("Code inconnu");
 			}
 
-		} catch (InputMismatchException IME){
-			System.out.println(IME.getStackTrace().toString());
+		} catch (InputMismatchException ime){
+			System.out.println(ime.getStackTrace().toString());
 		}
 				
 		

@@ -29,7 +29,6 @@ public class PizzeriaConsoleApp {
 		// Scanner d'entrée
 		Scanner sc = new Scanner(System.in);
 			
-		//IPizzaDao dao = PizzaPersistenceFichier.getInstance();
 		IPizzaDao dao = (IPizzaDao) Class.forName("fr.pizzeria.dao.PizzaPersistenceMemoire").newInstance();
 		
 		AjouterPizzaOptionMenu ajouterPizza = new AjouterPizzaOptionMenu(dao);
@@ -55,20 +54,18 @@ public class PizzeriaConsoleApp {
 			case 2:
 				try {
 					ajouterPizza.execute(sc);
-				} catch (SavePizzaException SPE) {
-					System.out.println(SPE.getMessage());
-				} catch (UnknownPizzaCodeException UPE){
-					System.out.println(UPE.getMessage());
+				} catch (SavePizzaException spe) {
+					System.out.println(spe.getMessage());
+				} catch (UnknownPizzaCodeException upe){
+					System.out.println(upe.getMessage());
 				}
 				break;
 			// Si choix 3 : Mise à jour d'une pizza
 			case 3:
 				try {
 					modifierPizza.execute(sc);	
-				} catch (UpdatePizzaException UPE) {
-					System.out.println(UPE.getMessage());
-				} catch (UnknownPizzaCodeException UPE){
-					System.out.println(UPE.getMessage());
+				} catch (UpdatePizzaException | UnknownPizzaCodeException e) {
+					System.out.println(e.getMessage());
 				}
 				break;
 			// Si choix 4 : Suppression d'une pizza

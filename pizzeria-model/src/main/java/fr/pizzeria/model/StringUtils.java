@@ -13,6 +13,10 @@ public class StringUtils {
 	// Permet d'afficher les nombres avec 2 décimales
 	static DecimalFormat df = new DecimalFormat("0.00");
 
+	private StringUtils(){
+		
+	}
+	
 	/**
 	 * Méthode de paramétrage d'affichage d'un objet
 	 * @param o : l'objet à manipuler

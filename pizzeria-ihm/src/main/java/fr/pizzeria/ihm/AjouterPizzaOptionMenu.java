@@ -60,7 +60,7 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 			if(!dao.saveNewPizza(new Pizza(codeTemp.toUpperCase(), nomTemp, prixTemp, categoriePizza))){
 				throw new SavePizzaException("Code déjà existant");
 			}
-		} catch (InputMismatchException IME){
+		} catch (InputMismatchException ime){
 			System.out.println("Entrez un nombre");
 		}
 			
