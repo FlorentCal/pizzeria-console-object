@@ -3,7 +3,9 @@ package fr.pizzeria.ihm;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.SavePizzaException;
@@ -19,7 +21,7 @@ import fr.pizzeria.model.Pizza;
  */
 public class AjouterPizzaOptionMenu extends OptionMenu {
 	
-	private static Logger LOG = Logger.getAnonymousLogger();
+	private static final Logger LOG = LoggerFactory.getLogger(AjouterPizzaOptionMenu.class);
 	
 	/**
 	 * Constructeur

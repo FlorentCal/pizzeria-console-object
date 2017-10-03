@@ -3,6 +3,9 @@ package fr.pizzeria.ihm;
 import java.io.IOException;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.StockageException;
 
@@ -12,6 +15,8 @@ import fr.pizzeria.exception.StockageException;
  *	Classe permettant de supprimer une pizza
  */
 public class SupprimerPizzaOptionMenu extends OptionMenu {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(SupprimerPizzaOptionMenu.class);
 	
 	/**
 	 * Constructeur
@@ -27,13 +32,13 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 	 * @throws ClassNotFoundException 
 	 * @throws StockageException 
 	 */
-	public void execute(Scanner sc) throws IOException, ClassNotFoundException, StockageException {
-		System.out.println("Suppression d’une pizza");
+	public void execute(Scanner sc) throws StockageException {
+		LOG.info("Suppression d’une pizza");
 		
 		dao.findAllPizzas();
 		
-		System.out.println("Veuillez entrer le code de la pizza à modifier");
-		System.out.println("(99 pour abandonner)");
+		LOG.info("Veuillez entrer le code de la pizza à modifier");
+		LOG.info("(99 pour abandonner)");
 
 		String codeASupprimer = sc.next();
 		codeASupprimer = codeASupprimer.toUpperCase();
@@ -46,7 +51,7 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 			dao.deletePizza(codeASupprimer);
 
 		} catch (StockageException e){
-			System.out.println(e.getMessage());
+			LOG.error(e.getMessage());
 		}
 		
 	}

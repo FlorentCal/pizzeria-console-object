@@ -3,6 +3,7 @@ package fr.pizzeria.ihm;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.IPizzaDao;
+import fr.pizzeria.exception.StockageException;
 
 /**
  * @author Florent Callaou
@@ -20,6 +21,6 @@ public abstract class OptionMenu {
 		this.dao = dao2;
 	}
 	
-	public abstract void execute(Scanner sc) throws Exception;
+	public abstract void execute(Scanner sc) throws StockageException;
 
 }

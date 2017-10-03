@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<slf4jVersion>1.6.1</slf4jVersion>
+		<slf4jVersion>1.7.5</slf4jVersion>
 	</properties>
 
 	<dependencyManagement>
@@ -29,8 +29,39 @@
 				<artifactId>pizzeria-dao-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${slf4jVersion}</version>
+			</dependency>
+			<!-- <dependency> -->
+			<!-- <groupId>org.slf4j</groupId> -->
+			<!-- <artifactId>jcl-over-slf4j</artifactId> -->
+			<!-- <version>${slf4jVersion}</version> -->
+			<!-- <scope>runtime</scope> -->
+			<!-- </dependency> -->
 		</dependencies>
 	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>com.javacodegeeks.mvnslf4j.App</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<modules>
 		<module>pizzeria-model</module>

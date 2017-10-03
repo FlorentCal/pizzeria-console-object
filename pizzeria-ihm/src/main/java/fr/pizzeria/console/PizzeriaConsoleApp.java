@@ -2,7 +2,6 @@ package fr.pizzeria.console;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.ihm.AjouterPizzaOptionMenu;
@@ -10,16 +9,16 @@ import fr.pizzeria.ihm.ModifierPizzaOptionMenu;
 import fr.pizzeria.ihm.SupprimerPizzaOptionMenu;
 import fr.pizzeria.model.Pizza;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * @author Florent Callaou
  * Classe main du projet
  */
 public class PizzeriaConsoleApp {
 
-	//private static final Logger LOG = LoggerFactory.getLogger(PizzeriaConsoleApp.class);
-	private static Logger LOG = Logger.getAnonymousLogger();
-
+	private static final Logger LOG = LoggerFactory.getLogger(PizzeriaConsoleApp.class);
+	
 	/**
 	 * Méthode main
 	 * @param args
@@ -72,7 +71,7 @@ public class PizzeriaConsoleApp {
 				break;
 				// Sinon : Mauvaise entrée
 			default:
-				LOG.info("Mauvaise entrée");
+				LOG.warn("Mauvaise entrée");
 				break;
 			}
 
@@ -100,7 +99,8 @@ public class PizzeriaConsoleApp {
 	private static void pizzaListing(IPizzaDao dao){
 		LOG.info("1. Lister les pizzas");
 		for (Pizza pizza : dao.findAllPizzas()) {
-			LOG.info(pizza.toString());
+			String pizzaDisplay = pizza.toString();
+			LOG.info(pizzaDisplay);
 		}
 
 	}

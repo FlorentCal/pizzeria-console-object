@@ -36,7 +36,7 @@ public class PizzaPersistenceFichier implements IPizzaDao {
 	//		return instanceUnique;
 	//	}
 
-	private void loadFile() throws StockageException{
+//	private void loadFile() throws StockageException{
 //		try {
 //			File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\saveFile.txt");
 //			FileReader reader = new FileReader(file);
@@ -73,57 +73,54 @@ public class PizzaPersistenceFichier implements IPizzaDao {
 //		} catch (FileNotFoundException e) {
 //			throw new SavePizzaException("sss", e);
 //		}
-	}
+//	}
 
 	@Override
 	public List<Pizza> findAllPizzas() {
 		//loadFile();
-		for (Pizza pizza : pizzas) {
-			System.out.println(pizza.toString());
-		}
-		return null;
+		return pizzas;
 	}
 
 	@Override
 	public void saveNewPizza(Pizza pizzaToAdd) throws SavePizzaException  {
-		for (Pizza pizza : pizzas) {
-			if(pizza.getCode().equals(pizzaToAdd.getCode())){
-				return;
-			}
-		}
-
-		File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\saveFile.txt");
-		FileWriter writer;
-		try {
-			writer = new FileWriter(file);
-
-			bufferedWriter = new BufferedWriter(writer);
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(pizzaToAdd.getCode() + ";");
-			sb.append(pizzaToAdd.getNom() + ";");
-			sb.append(pizzaToAdd.getPrix() + ";");
-			sb.append(pizzaToAdd.getCategorie());
-
-			bufferedWriter.append(sb.toString());
-
-			bufferedWriter.flush();
-			writer.close();
-			bufferedWriter.close();
-
-		} catch (IOException e) {
-			throw new SavePizzaException("sss", e);
-		}
+//		for (Pizza pizza : pizzas) {
+//			if(pizza.getCode().equals(pizzaToAdd.getCode())){
+//				return;
+//			}
+//		}
+//
+//		File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\saveFile.txt");
+//		FileWriter writer;
+//		try {
+//			writer = new FileWriter(file);
+//
+//			bufferedWriter = new BufferedWriter(writer);
+//			StringBuilder sb = new StringBuilder();
+//
+//			sb.append(pizzaToAdd.getCode() + ";");
+//			sb.append(pizzaToAdd.getNom() + ";");
+//			sb.append(pizzaToAdd.getPrix() + ";");
+//			sb.append(pizzaToAdd.getCategorie());
+//
+//			bufferedWriter.append(sb.toString());
+//
+//		} catch (IOException e) {
+//			throw new SavePizzaException("sss", e);
+//		} finally {
+//			bufferedWriter.flush();
+//			writer.close();
+//			bufferedWriter.close();
+//		}
 	}
 
 	@Override
 	public void updatePizza(String codePizza, Pizza pizza) {
-
+		// TODO
 	}
 
 	@Override
 	public void deletePizza(String codePizza) {
-
+		// TODO
 	}
 
 	@Override
