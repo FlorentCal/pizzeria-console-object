@@ -2,92 +2,49 @@ package fr.pizzeria.model;
 
 /**
  * @author Florent Callaou
- * Classe contenant les données d'une pizza
+ * Class containing elements of a Pizza
  */
 public class Pizza {
 
-	/**
-	 * Identifiant unique de la pizza
-	 */
+
+	/** id : int */
 	private int id;
-	/**
-	 * Compteur d'id
-	 */
+	
+	/** currentId : int : L'id actuel des pizzas */
 	private static int currentId;
-	/**
-	 * Code de la pizza
-	 */
+	
+	/** code : String */
 	@ToString(uppercase = true, separator = "#val ->")
 	private String code;
-	/**
-	 * Nom de la pizza 
-	 */
+	
+	/** name : String */
 	@ToString(uppercase = true, separator = " #val")
-	private String nom;
-	/**
-	 * Prix de la pizza
-	 */
+	private String name;
+	
+	/** price : double */
 	@ToString(decimalFormat = true, separator = " (#val€)")
-	private double prix;
+	private double price;
 
+	/** category : PizzaCategory */
 	@ToString(separator = " [#val]")
-	private CategoriePizza categorie;
+	private PizzaCategory category;
 
 	/**
-	 * Constructeur d'une pizza
-	 * @param code : Code de la pizza
-	 * @param nom : Nom de la pizza 
-	 * @param prix : Prix de la pizza
+	 * Pizza Constructor
+	 * @param code : Code of the pizza
+	 * @param nom : Name of the pizza
+	 * @param price : Price of the pizza
 	 */
-	public Pizza(String code, String nom, double prix, CategoriePizza categorie) {
+	public Pizza(String code, String name, double price, PizzaCategory category) {
 		super();
-		setCode(code);
-		setNom(nom);
-		setPrix(prix);
-		setCategorie(categorie);
+		this.code = code;
+		this.name = name;
+		this.price = price;
+		this.category = category;
 		setId(currentId);
 		currentId++;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public double getPrix() {
-		return prix;
-	}
-
-	public void setPrix(double prix) {
-		this.prix = prix;
-	}
-
-	public CategoriePizza getCategorie() {
-		return categorie;
-	}
-
-	public void setCategorie(CategoriePizza categorie) {
-		this.categorie = categorie;
-	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -96,6 +53,89 @@ public class Pizza {
 	public String toString() {	
 		return StringUtils.convert(this);
 	}	
+	
+	/** Getter for id
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
 
+	/** Setter for id
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/** Getter for currentId
+	 * @return the currentId
+	 */
+	public static int getCurrentId() {
+		return currentId;
+	}
+
+	/** Setter for currentId
+	 * @param currentId the currentId to set
+	 */
+	public static void setCurrentId(int currentId) {
+		Pizza.currentId = currentId;
+	}
+
+	/** Getter for code
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	/** Setter for code
+	 * @param code the code to set
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	/** Getter for name
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/** Setter for name
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/** Getter for price
+	 * @return the price
+	 */
+	public double getPrice() {
+		return price;
+	}
+
+	/** Setter for price
+	 * @param price the price to set
+	 */
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	/** Getter for category
+	 * @return the category
+	 */
+	public PizzaCategory getCategory() {
+		return category;
+	}
+
+	/** Setter for category
+	 * @param category the category to set
+	 */
+	public void setCategory(PizzaCategory category) {
+		this.category = category;
+	}
 
 }

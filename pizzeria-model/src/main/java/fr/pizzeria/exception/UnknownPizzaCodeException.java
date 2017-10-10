@@ -1,5 +1,9 @@
 package fr.pizzeria.exception;
 
+/**
+ * @author Florent Callaou
+ * Exception thrown when trying to search a code
+ */
 public class UnknownPizzaCodeException extends StockageException {
 	
 	private static final long serialVersionUID = -9042111564621177089L;

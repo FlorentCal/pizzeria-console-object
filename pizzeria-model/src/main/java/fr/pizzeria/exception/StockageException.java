@@ -1,5 +1,9 @@
 package fr.pizzeria.exception;
 
+/**
+ * @author Florent Callaou
+ * Exception thrown when performing an action on a pizza
+ */
 public class StockageException extends Exception {
 	
 	private static final long serialVersionUID = 2037331187913174367L;

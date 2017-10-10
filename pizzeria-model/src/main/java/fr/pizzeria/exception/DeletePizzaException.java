@@ -1,5 +1,9 @@
 package fr.pizzeria.exception;
 
+/**
+ * @author Florent Callaou
+ * Exception thrown when trying to delete a pizza
+ */
 public class DeletePizzaException extends StockageException {
 
 	private static final long serialVersionUID = 2769821308584269270L;

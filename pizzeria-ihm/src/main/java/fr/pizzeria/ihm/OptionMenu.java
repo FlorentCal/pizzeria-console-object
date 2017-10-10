@@ -7,20 +7,25 @@ import fr.pizzeria.exception.StockageException;
 
 /**
  * @author Florent Callaou
- * Classe mère des actions sur liste de pizzas
+ * Class of action on pizzas
  */
 public abstract class OptionMenu {
 	
 	protected IPizzaDao dao;
 	
 	/**
-	 * Constructeur
+	 * OptionMenu Constructor
 	 */
 	public OptionMenu(IPizzaDao dao2) {
 		super();
 		this.dao = dao2;
 	}
 	
+	/**
+	 * Action on a pizza
+	 * @param sc : Current scanner
+	 * @throws StockageException
+	 */
 	public abstract void execute(Scanner sc) throws StockageException;
 
 }

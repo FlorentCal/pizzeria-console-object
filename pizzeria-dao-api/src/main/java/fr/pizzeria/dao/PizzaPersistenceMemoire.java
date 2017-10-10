@@ -7,7 +7,7 @@ import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.exception.UpdatePizzaException;
-import fr.pizzeria.model.CategoriePizza;
+import fr.pizzeria.model.PizzaCategory;
 import fr.pizzeria.model.Pizza;
 
 public class PizzaPersistenceMemoire implements IPizzaDao {
@@ -17,14 +17,14 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 	private List<Pizza> pizzas = new ArrayList<>();
 
 	// Instanciations des pizzas
-	Pizza peperoni = new Pizza("PEP", "Pépéroni", 12.50, CategoriePizza.VIANDE);
-	Pizza margherita = new Pizza("MAR", "Margherita", 14.00, CategoriePizza.POISSON);
-	Pizza reine = new Pizza("REIN", "La Reine", 11.50, CategoriePizza.VIANDE);
-	Pizza fromage = new Pizza("FRO", "La 4 fromages", 12.00, CategoriePizza.SANS_VIANDE);
-	Pizza cannibale = new Pizza("CAN", "La cannibale", 12.50, CategoriePizza.VIANDE);
-	Pizza savoyarde = new Pizza("SAV", "La savoyarde", 13.00, CategoriePizza.VIANDE);
-	Pizza orientale = new Pizza("ORI", "L’orientale", 13.50, CategoriePizza.VIANDE);
-	Pizza indienne = new Pizza("IND", "L’indienne", 14.00, CategoriePizza.VIANDE);
+	Pizza peperoni = new Pizza("PEP", "Pépéroni", 12.50, PizzaCategory.MEAT);
+	Pizza margherita = new Pizza("MAR", "Margherita", 14.00, PizzaCategory.FISH);
+	Pizza reine = new Pizza("REIN", "La Reine", 11.50, PizzaCategory.MEAT);
+	Pizza fromage = new Pizza("FRO", "La 4 fromages", 12.00, PizzaCategory.WITHOUT_MEAT);
+	Pizza cannibale = new Pizza("CAN", "La cannibale", 12.50, PizzaCategory.MEAT);
+	Pizza savoyarde = new Pizza("SAV", "La savoyarde", 13.00, PizzaCategory.MEAT);
+	Pizza orientale = new Pizza("ORI", "L’orientale", 13.50, PizzaCategory.MEAT);
+	Pizza indienne = new Pizza("IND", "L’indienne", 14.00, PizzaCategory.MEAT);
 
 	/**
 	 * Constructeur
@@ -67,16 +67,16 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 	}
 
 	@Override
-	public void updatePizza(String codePizza, Pizza pizzaUpdated) throws StockageException {
+	public void updatePizza(String pizzaCode, Pizza pizzaUpdated) throws StockageException {
 		
 		verifyCodeLenght(pizzaUpdated.getCode());
 		
 		for (Pizza pizza : pizzas) {
 			// Si le code de la pizza parcourue est égal au code que l'utilisateur à renseigné, on met à jour la pizza de la liste
-			if(codePizza.equals(pizza.getCode())){
+			if(pizzaCode.equals(pizza.getCode())){
 				pizza.setCode(pizzaUpdated.getCode().toUpperCase());
-				pizza.setNom(pizzaUpdated.getNom());
-				pizza.setPrix(pizzaUpdated.getPrix());		
+				pizza.setName(pizzaUpdated.getName());
+				pizza.setPrice(pizzaUpdated.getPrice());		
 				return;
 			}
 		}
@@ -84,10 +84,10 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 	}
 
 	@Override
-	public void deletePizza(String codePizza) throws DeletePizzaException {
+	public void deletePizza(String pizzaCode) throws DeletePizzaException {
 		for (Pizza pizza : pizzas) {
 			// Si le code de la pizza parcourue est égal au code que l'utilisateur à renseigné, on supprime la pizza
-			if(codePizza.equals(pizza.getCode())){
+			if(pizzaCode.equals(pizza.getCode())){
 				pizzas.remove(pizza);	
 				return;
 			}
@@ -112,7 +112,8 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 		}
 	}
 
-	public int getNombrePizzas(){
+	@Override
+	public int getPizzasNumber() {
 		return pizzas.size();
 	}
 

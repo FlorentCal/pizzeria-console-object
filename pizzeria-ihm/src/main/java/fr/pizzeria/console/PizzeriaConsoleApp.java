@@ -4,10 +4,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.DeletePizzaException;
-import fr.pizzeria.ihm.AjouterPizzaOptionMenu;
-import fr.pizzeria.ihm.ModifierPizzaOptionMenu;
-import fr.pizzeria.ihm.SupprimerPizzaOptionMenu;
-import fr.pizzeria.model.Pizza;
+import fr.pizzeria.ihm.AddPizzaOptionMenu;
+import fr.pizzeria.ihm.UpdatePizzaOptionMenu;
+import fr.pizzeria.ihm.DeletePizzaOptionMenu;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,67 +17,60 @@ import org.slf4j.LoggerFactory;
 public class PizzeriaConsoleApp {
 
 	private static final Logger LOG = LoggerFactory.getLogger(PizzeriaConsoleApp.class);
-	
-	/**
-	 * Méthode main
-	 * @param args
-	 * @throws DeletePizzaException 
-	 */
+		
 	public static void main(String[] args) throws Exception {
 
-		// Choix de l'utilisateur dans le menu
-		int choix = 0;
-		// Scanner d'entrée
+		int choice = 0;
 		Scanner sc = new Scanner(System.in);
 
 		IPizzaDao dao = (IPizzaDao) Class.forName("fr.pizzeria.dao.PizzaPersistenceMemoire").newInstance();
 
-		AjouterPizzaOptionMenu ajouterPizza = new AjouterPizzaOptionMenu(dao);
-		ModifierPizzaOptionMenu modifierPizza = new ModifierPizzaOptionMenu(dao);
-		SupprimerPizzaOptionMenu supprimerPizza = new SupprimerPizzaOptionMenu(dao);
+		AddPizzaOptionMenu addPizza = new AddPizzaOptionMenu(dao);
+		UpdatePizzaOptionMenu updatePizza = new UpdatePizzaOptionMenu(dao);
+		DeletePizzaOptionMenu deletePizza = new DeletePizzaOptionMenu(dao);
 
 		// Tant que le choix n'est pas de sortir, on continue
-		while(choix != 99){
+		while(choice != 99){
 
 			menu();
 			try {
-				choix = sc.nextInt();	
+				choice = sc.nextInt();	
 			} catch(InputMismatchException ime){
-				LOG.info("Entrez un nombre");
+				LOG.info("Enter a number");
 			}
 
-			switch(choix){
+			switch(choice){
 			// Si choix 1 : affichage des pizzas
 			case 1:
 				pizzaListing(dao);
 				break;
 				// Si choix 2 : ajout d'une pizza
 			case 2:
-				ajouterPizza.execute(sc);
+				addPizza.execute(sc);
 				break;
 				// Si choix 3 : Mise à jour d'une pizza
 			case 3:
 				pizzaListing(dao);
-				modifierPizza.execute(sc);	
+				updatePizza.execute(sc);	
 				break;
 				// Si choix 4 : Suppression d'une pizza
 			case 4:
 				pizzaListing(dao);
-				supprimerPizza.execute(sc);
+				deletePizza.execute(sc);
 				break;
 			case 5:
-				LOG.info("Nombre de pizzas : " + dao.getNombrePizzas());
+				LOG.info("Number of pizzas : " + dao.getPizzasNumber());
 				break;
 				// Sinon : Mauvaise entrée
 			default:
-				LOG.warn("Mauvaise entrée");
+				LOG.warn("Bad entry");
 				break;
 			}
 
 		}
 
 		// Sortie du programme
-		LOG.info("Aurevoir \u2639");
+		LOG.info("Good Bye ! \u2639");
 		sc.close();
 
 	}
@@ -88,20 +80,17 @@ public class PizzeriaConsoleApp {
 	 */
 	private static void menu(){
 		LOG.info("***** Pizzeria Administration *****");
-		LOG.info("1. Lister les pizzas");
-		LOG.info("2. Ajouter une nouvelle pizza");
-		LOG.info("3. Mettre à jour une pizza");
-		LOG.info("4. Supprimer une pizza");
-		LOG.info("5. Connaître nombre de pizzas");
-		LOG.info("99. Sortir");
+		LOG.info("1. Listing pizzas");
+		LOG.info("2. Add a new pizza");
+		LOG.info("3. Update a pizza");
+		LOG.info("4. Delete a pizza");
+		LOG.info("5. Number of pizzas");
+		LOG.info("99. Quit");
 	}
 
 	private static void pizzaListing(IPizzaDao dao){
-		LOG.info("1. Lister les pizzas");
-		for (Pizza pizza : dao.findAllPizzas()) {
-			String pizzaDisplay = pizza.toString();
-			LOG.info(pizzaDisplay);
-		}
+		LOG.info("1. Listing pizzas");
+		dao.findAllPizzas().forEach(pizza -> LOG.info(pizza.toString()));
 
 	}
 
