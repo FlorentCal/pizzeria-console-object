@@ -16,11 +16,10 @@
 		</encoder>
 	</appender>
 	<!-- politique de log pour les classes du package dev.console -->
-	<logger name="fr.pizzeria.console" level="INFO">
+	<logger name="fr.pizzeria.ihm" level="INFO">
 		<appender-ref ref="STDOUT" />
 	</logger>
 
-	<!-- règle de logs par défaut. Ici : niveau INFO vers la sortie standard -->
 	<root level="DEBUG">
 		<appender-ref ref="FILE" />
 	</root>

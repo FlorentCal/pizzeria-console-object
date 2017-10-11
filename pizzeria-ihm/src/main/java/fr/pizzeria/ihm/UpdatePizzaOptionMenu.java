@@ -1,6 +1,5 @@
 package fr.pizzeria.ihm;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -28,7 +27,7 @@ public class UpdatePizzaOptionMenu extends OptionMenu {
 	 * @param pizzas : liste des pizzas commune
 	 */
 	public UpdatePizzaOptionMenu(IPizzaDao dao) {
-		super(dao);
+		super(dao, "Update a pizza");
 	}
 		
 	/**
@@ -40,7 +39,7 @@ public class UpdatePizzaOptionMenu extends OptionMenu {
 		
 		LOG.info("Updating a pizza");
 		
-		dao.findAllPizzas();
+		listPizzas(dao.findAllPizzas());
 		
 		LOG.info("Please select the code of the pizza to update");
 		LOG.info("(99 to quit)");

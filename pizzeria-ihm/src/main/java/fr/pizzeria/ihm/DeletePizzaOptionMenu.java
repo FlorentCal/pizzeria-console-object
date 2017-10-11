@@ -22,7 +22,7 @@ public class DeletePizzaOptionMenu extends OptionMenu {
 	 * @param dao : Iinterface of pizzas
 	 */
 	public DeletePizzaOptionMenu(IPizzaDao dao) {
-		super(dao);
+		super(dao, "Delete a pizza");
 	}	
 
 	/**
@@ -32,8 +32,8 @@ public class DeletePizzaOptionMenu extends OptionMenu {
 	public void execute(Scanner sc) throws StockageException {
 		LOG.info("Deleting a pizza");
 		
-		dao.findAllPizzas();
-		
+		listPizzas(dao.findAllPizzas());
+				
 		LOG.info("Please enter the code of the pizza to delete");
 		LOG.info("(99 to quit)");
 

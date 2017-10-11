@@ -19,7 +19,7 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 	// Instanciations des pizzas
 	Pizza peperoni = new Pizza("PEP", "Pépéroni", 12.50, PizzaCategory.MEAT);
 	Pizza margherita = new Pizza("MAR", "Margherita", 14.00, PizzaCategory.FISH);
-	Pizza reine = new Pizza("REIN", "La Reine", 11.50, PizzaCategory.MEAT);
+	Pizza reine = new Pizza("REI", "La Reine", 11.50, PizzaCategory.MEAT);
 	Pizza fromage = new Pizza("FRO", "La 4 fromages", 12.00, PizzaCategory.WITHOUT_MEAT);
 	Pizza cannibale = new Pizza("CAN", "La cannibale", 12.50, PizzaCategory.MEAT);
 	Pizza savoyarde = new Pizza("SAV", "La savoyarde", 13.00, PizzaCategory.MEAT);

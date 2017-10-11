@@ -47,7 +47,7 @@ public class StringUtils {
 				if(field.getAnnotation(ToString.class).uppercase()){
 					builder.append(finalValue.toString().toUpperCase());
 				} else {
-					builder.append(finalValue);
+					builder.append("\t" + finalValue);
 				}
 			}
 		}

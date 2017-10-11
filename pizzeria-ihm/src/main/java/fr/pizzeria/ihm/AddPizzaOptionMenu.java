@@ -28,7 +28,7 @@ public class AddPizzaOptionMenu extends OptionMenu {
 	 * @param pizzas : liste des pizzas commune
 	 */
 	public AddPizzaOptionMenu(IPizzaDao dao) {
-		super(dao);
+		super(dao, "Add a new pizza");
 	}	
 	
 	/**
