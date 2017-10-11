@@ -3,6 +3,8 @@ package fr.pizzeria.ihm;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.IPizzaDao;
+import fr.pizzeria.exception.DeletePizzaException;
+import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.exception.StockageException;
 
 /**
@@ -40,6 +42,10 @@ public class DeletePizzaOptionMenu extends OptionMenu {
 		if(codeToDelete.equals(QUIT_CODE)){
 			return;
 		}
+			
+		if(!dao.findPizzaByCode(codeToDelete).isPresent()){
+			throw new DeletePizzaException("Aucune pizza avec le code : " + codeToDelete);
+		}
 
 		try {
 			dao.deletePizza(codeToDelete);
@@ -47,6 +53,8 @@ public class DeletePizzaOptionMenu extends OptionMenu {
 		} catch (StockageException e){
 			LOG.error(e.getMessage());
 		}
+		
+		LOG.info("La pizza avec le code {} a été supprimée", codeToDelete);
 		
 	}
 
