@@ -2,9 +2,6 @@ package fr.pizzeria.ihm;
 
 import java.util.Scanner;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.StockageException;
 
@@ -15,7 +12,7 @@ import fr.pizzeria.exception.StockageException;
  */
 public class DeletePizzaOptionMenu extends OptionMenu {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(DeletePizzaOptionMenu.class);
+	private static final String QUIT_CODE = "99";
 	
 	/**
 	 * DeletePizzaOptionMenu Constructor
@@ -35,12 +32,12 @@ public class DeletePizzaOptionMenu extends OptionMenu {
 		listPizzas(dao.findAllPizzas());
 				
 		LOG.info("Please enter the code of the pizza to delete");
-		LOG.info("(99 to quit)");
+		LOG.info("({} to quit)", QUIT_CODE);
 
 		String codeToDelete = sc.next();
 		codeToDelete = codeToDelete.toUpperCase();
 
-		if(codeToDelete.equals("99")){
+		if(codeToDelete.equals(QUIT_CODE)){
 			return;
 		}
 

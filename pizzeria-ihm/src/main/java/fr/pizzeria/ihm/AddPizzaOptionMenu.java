@@ -1,11 +1,7 @@
 package fr.pizzeria.ihm;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.SavePizzaException;
@@ -20,8 +16,9 @@ import fr.pizzeria.model.Pizza;
  *	Class Adding a pizza
  */
 public class AddPizzaOptionMenu extends OptionMenu {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(AddPizzaOptionMenu.class);
+
+	private static final int MIN_CHOICE = 1;
+	private static final int MAX_CHOICE = 3;
 	
 	/**
 	 * AddPizzaOptionMenu Constructor
@@ -46,7 +43,7 @@ public class AddPizzaOptionMenu extends OptionMenu {
 	
 		PizzaCategory categoryPizza = null;
 		int index = sc.nextInt();
-		if(index > 3 || index < 1) {
+		if(index > MAX_CHOICE || index < MIN_CHOICE) {
 			throw new UnknownPizzaCodeException("Unlnown code");
 		}
 		categoryPizza = PizzaCategory.getCategoriePizza(index);

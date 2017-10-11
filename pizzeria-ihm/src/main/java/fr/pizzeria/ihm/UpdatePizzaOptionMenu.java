@@ -3,9 +3,6 @@ package fr.pizzeria.ihm;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.exception.UnknownPizzaCodeException;
@@ -19,8 +16,9 @@ import fr.pizzeria.model.Pizza;
  *	Class to update pizza
  */
 public class UpdatePizzaOptionMenu extends OptionMenu {
-
-	private static final Logger LOG = LoggerFactory.getLogger(DeletePizzaOptionMenu.class);
+	
+	private static final int MIN_CHOICE = 1;
+	private static final int MAX_CHOICE = 3;
 	
 	/**
 	 * UpdatePizzaOptionMenu Constructor
@@ -53,7 +51,7 @@ public class UpdatePizzaOptionMenu extends OptionMenu {
 		
 		PizzaCategory categoryPizza;
 		int index = -1;
-		while(index > 3 || index < 1){
+		while(index > MAX_CHOICE || index < MIN_CHOICE){
 			LOG.info("Please select a category : ");
 			LOG.info("1. Meat");
 			LOG.info("2. Fish");
