@@ -13,6 +13,7 @@ import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.exception.UnknownPizzaCodeException;
 import fr.pizzeria.model.Pizza;
 import fr.pizzeria.model.PizzaCategory;
+import fr.pizzeria.viewModel.PizzaViewModel;
 
 /**
  * @author Florent Callaou
@@ -51,7 +52,7 @@ public abstract class OptionMenu {
 	 */
 	public abstract void execute(Scanner sc) throws StockageException;
 	
-	protected void listPizzas(List<Pizza> pizzas) {
+	protected void listPizzas(List<PizzaViewModel> pizzas) {
 		if (pizzas.isEmpty()) {
 			LOG.info("The pizza list is empty");
 		} else {
@@ -59,11 +60,11 @@ public abstract class OptionMenu {
 		}
 	}
 	
-	protected Pizza pizzaCreator(Scanner sc) throws UnknownPizzaCodeException{
+	protected PizzaViewModel pizzaCreator(Scanner sc) throws UnknownPizzaCodeException{
 		
 		PizzaCategory categoryPizza = PizzaCategory.getCategoriePizza(categoryChoice(sc));
 			
-		return new Pizza(codeControl(sc), nameControl(sc), priceControl(sc), categoryPizza);
+		return new PizzaViewModel(codeControl(sc), nameControl(sc), priceControl(sc));
 	}
 	
 	private int categoryChoice(Scanner sc) {

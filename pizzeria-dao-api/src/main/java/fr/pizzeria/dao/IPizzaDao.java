@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
+import fr.pizzeria.viewModel.PizzaViewModel;
 
 /**
  * @author Florent Callaou
@@ -15,9 +16,9 @@ public interface IPizzaDao {
 	/**
 	 * @return the list of pizzas
 	 */
-	List<Pizza> findAllPizzas();
+	List<PizzaViewModel> findAllPizzas();
 
-	default Optional<Pizza> findPizzaByCode(String pizzaCode) {
+	default Optional<PizzaViewModel> findPizzaByCode(String pizzaCode) {
 		return findAllPizzas().stream()
 				.filter(pizza -> pizza.getCode().equals(pizzaCode))
 				.findAny();
@@ -28,7 +29,7 @@ public interface IPizzaDao {
 	 * @param pizza
 	 * @throws StockageException
 	 */
-	void saveNewPizza(Pizza pizza) throws StockageException;
+	void saveNewPizza(PizzaViewModel pizza) throws StockageException;
 
 	/**
 	 * Update a pizza
@@ -36,7 +37,7 @@ public interface IPizzaDao {
 	 * @param pizza
 	 * @throws StockageException
 	 */
-	void updatePizza(String codePizza, Pizza pizza) throws StockageException;
+	void updatePizza(String codePizza, PizzaViewModel pizza) throws StockageException;
 
 	/**
 	 * Delete a pizza
