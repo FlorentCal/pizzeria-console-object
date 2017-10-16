@@ -8,21 +8,20 @@ import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.model.PizzaCategory;
-import fr.pizzeria.viewModel.PizzaViewModel;
 import fr.pizzeria.model.Pizza;
 
 public class PizzaPersistenceMemoire implements IPizzaDao {
 
-	private List<PizzaViewModel> pizzas = new ArrayList<>();
+	private List<Pizza> pizzas = new ArrayList<>();
 
-	PizzaViewModel peperoni = new PizzaViewModel("PEP", "Pépéroni", 12.50);
-	PizzaViewModel margherita = new PizzaViewModel("MAR", "Margherita", 14.00);
-	PizzaViewModel reine = new PizzaViewModel("REI", "La Reine", 11.50);
-	PizzaViewModel fromage = new PizzaViewModel("FRO", "La 4 fromages", 12.00);
-	PizzaViewModel cannibale = new PizzaViewModel("CAN", "La cannibale", 12.50);
-	PizzaViewModel savoyarde = new PizzaViewModel("SAV", "La savoyarde", 13.00);
-	PizzaViewModel orientale = new PizzaViewModel("ORI", "L’orientale", 13.50);
-	PizzaViewModel indienne = new PizzaViewModel("IND", "L’indienne", 14.00);
+	Pizza peperoni = new Pizza("PEP", "Pépéroni", 12.50, PizzaCategory.MEAT);
+	Pizza margherita = new Pizza("MAR", "Margherita", 14.00, PizzaCategory.FISH);
+	Pizza reine = new Pizza("REI", "La Reine", 11.50, PizzaCategory.MEAT);
+	Pizza fromage = new Pizza("FRO", "La 4 fromages", 12.00, PizzaCategory.WITHOUT_MEAT);
+	Pizza cannibale = new Pizza("CAN", "La cannibale", 12.50, PizzaCategory.MEAT);
+	Pizza savoyarde = new Pizza("SAV", "La savoyarde", 13.00, PizzaCategory.MEAT);
+	Pizza orientale = new Pizza("ORI", "L’orientale", 13.50, PizzaCategory.MEAT);
+	Pizza indienne = new Pizza("IND", "L’indienne", 14.00, PizzaCategory.MEAT);
 
 	/**
 	 * Constructeur
@@ -45,12 +44,12 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 	}
 
 	@Override
-	public List<PizzaViewModel> findAllPizzas() {
+	public List<Pizza> findAllPizzas() {
 		return pizzas;
 	}
 
 	@Override
-	public void saveNewPizza(PizzaViewModel pizzaToAdd) throws StockageException {
+	public void saveNewPizza(Pizza pizzaToAdd) throws StockageException {
 		
 		verifyAdd(pizzaToAdd);
 		
@@ -58,11 +57,11 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 	}
 
 	@Override
-	public void updatePizza(String pizzaCode, PizzaViewModel pizzaUpdated) throws StockageException {
+	public void updatePizza(String pizzaCode, Pizza pizzaUpdated) throws StockageException {
 		
 		verifyCodeLenght(pizzaUpdated.getCode());
 		
-		for (PizzaViewModel pizza : pizzas) {
+		for (Pizza pizza : pizzas) {
 			// Si le code de la pizza parcourue est égal au code que l'utilisateur à renseigné, on met à jour la pizza de la liste
 			if(pizzaCode.equals(pizza.getCode())){
 				pizza.setCode(pizzaUpdated.getCode().toUpperCase());
@@ -75,22 +74,22 @@ public class PizzaPersistenceMemoire implements IPizzaDao {
 	}
 
 	@Override
-	public void deletePizza(String pizzaCode) throws DeletePizzaException {
-		for (PizzaViewModel pizza : pizzas) {
+	public void deletePizza(Pizza pizzaToDelete) throws DeletePizzaException {
+		for (Pizza pizza : pizzas) {
 			// Si le code de la pizza parcourue est égal au code que l'utilisateur à renseigné, on supprime la pizza
-			if(pizzaCode.equals(pizza.getCode())){
+			if(pizzaToDelete.getCode().equals(pizza.getCode())){
 				pizzas.remove(pizza);	
 				return;
 			}
 		}
 		throw new DeletePizzaException("Code inconnu");
 	}
-	private void verifyAdd(PizzaViewModel pizzaToAdd) throws StockageException{
+	private void verifyAdd(Pizza pizzaToAdd) throws StockageException{
 		verifyCodeLenght(pizzaToAdd.getCode());
 		if(pizzaToAdd.getCode().length() > 3){
 			throw new SavePizzaException("Code trop long (3 caractères autorisés)");
 		}
-		for (PizzaViewModel pizza : pizzas) {
+		for (Pizza pizza : pizzas) {
 			if(pizza.getCode().equals(pizzaToAdd.getCode())){
 				throw new SavePizzaException("Code déjà existant");
 			}

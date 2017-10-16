@@ -1,11 +1,13 @@
 package fr.pizzeria.ihm;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.exception.StockageException;
+import fr.pizzeria.model.Pizza;
 
 /**
  * @author Florent Callaou
@@ -43,12 +45,13 @@ public class DeletePizzaOptionMenu extends OptionMenu {
 			return;
 		}
 			
-		if(!dao.findPizzaByCode(codeToDelete).isPresent()){
+		Optional<Pizza> pizza = dao.findPizzaByCode(codeToDelete);
+		if(!pizza.isPresent()){
 			throw new DeletePizzaException("Aucune pizza avec le code : " + codeToDelete);
 		}
 
 		try {
-			dao.deletePizza(codeToDelete);
+			dao.deletePizza(pizza.get());
 
 		} catch (StockageException e){
 			LOG.error(e.getMessage());

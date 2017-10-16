@@ -1,22 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.pizzeria.controller.FXMLDocumentControllerPizza">
-   <items>
-      <VBox prefHeight="200.0" prefWidth="100.0">
-         <children>
-            <ListView fx:id="listViewPizzas" prefHeight="457.0" prefWidth="296.0" VBox.vgrow="ALWAYS" />
-         </children>
-      </VBox>
-      <VBox prefHeight="200.0" prefWidth="100.0">
-         <children>
-            <TextField fx:id="textFieldCode" />
-            <TextField fx:id="textFieldName"/>
-            <TextField fx:id="textFieldPrice"/>
-         </children></VBox>
-   </items>
+	<items>
+		<VBox prefHeight="200.0" prefWidth="100.0">
+			<children>
+				<ListView fx:id="listViewPizzas" onMouseClicked="#onClickedList" prefHeight="457.0" prefWidth="296.0" VBox.vgrow="ALWAYS" />
+				<Button maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onClickedAdd" text="Add pizza" VBox.vgrow="ALWAYS">
+					<VBox.margin>
+						<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+					</VBox.margin>
+					<effect>
+						<DropShadow blurType="ONE_PASS_BOX" offsetX="2.0" offsetY="2.0" />
+					</effect>
+				</Button>
+			</children>
+		</VBox>
+		<VBox prefHeight="200.0" prefWidth="100.0">
+			<children>
+				<TextField fx:id="textFieldCode" />
+				<TextField fx:id="textFieldName" />
+				<TextField fx:id="textFieldPrice" />
+				<ComboBox fx:id="comboBoxCategory" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="ALWAYS" />
+				<Button mnemonicParsing="false" onAction="#onClickSave" prefHeight="25.0" prefWidth="65.0" text="Save">
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+					<VBox.margin>
+						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+					</VBox.margin>
+					<effect>
+						<DropShadow blurType="ONE_PASS_BOX" offsetX="2.0" offsetY="2.0" />
+					</effect>
+					<effect>
+						<DropShadow blurType="ONE_PASS_BOX" offsetX="2.0" offsetY="2.0" />
+					</effect>
+				</Button>
+				<Label fx:id="labelInfo" maxWidth="1.7976931348623157E308" prefHeight="70.0" prefWidth="296.0" wrapText="true" VBox.vgrow="ALWAYS">
+					<font>
+						<Font size="18.0" />
+					</font>
+				</Label>
+				<HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+					<children>
+						<Button fx:id="yesButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickedYes" text="Yes" visible="false" HBox.hgrow="ALWAYS">
+							<HBox.margin>
+								<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+							</HBox.margin>
+							<cursor>
+								<Cursor fx:constant="HAND" />
+							</cursor>
+							<effect>
+								<DropShadow blurType="ONE_PASS_BOX" offsetX="2.0" offsetY="2.0" />
+							</effect>
+						</Button>
+						<Button fx:id="noButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickedNo" text="No" visible="false" HBox.hgrow="ALWAYS">
+							<HBox.margin>
+								<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+							</HBox.margin>
+							<cursor>
+								<Cursor fx:constant="HAND" />
+							</cursor>
+							<effect>
+								<DropShadow blurType="ONE_PASS_BOX" offsetX="2.0" offsetY="2.0" />
+							</effect>
+						</Button>
+					</children>
+				</HBox>
+				<HBox maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="296.0">
+					<children>
+						<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickDelete" text="Delete" HBox.hgrow="ALWAYS">
+							<cursor>
+								<Cursor fx:constant="HAND" />
+							</cursor>
+							<HBox.margin>
+								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+							</HBox.margin>
+							<effect>
+								<DropShadow blurType="ONE_PASS_BOX" offsetX="2.0" offsetY="2.0" />
+							</effect>
+						</Button>
+						<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickModify" text="Modifiy" HBox.hgrow="ALWAYS">
+							<HBox.margin>
+								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+							</HBox.margin>
+							<effect>
+								<DropShadow blurType="ONE_PASS_BOX" offsetX="2.0" offsetY="2.0" />
+							</effect>
+						</Button>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+	</items>
 </SplitPane>

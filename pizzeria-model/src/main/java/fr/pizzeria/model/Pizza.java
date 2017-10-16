@@ -8,14 +8,13 @@ import java.beans.PropertyChangeSupport;
  * Class containing elements of a Pizza
  */
 public class Pizza {
-
-
+	
 	/** id : int */
 	private int id;
 	public static final String PROP_ID = "id";
 
 	/** currentId : int : L'id actuel des pizzas */
-	private static int currentId;
+	private static int currentId = 1;
 	public static final String PROP_CURRENT_ID = "currentId";
 
 	/** code : String */

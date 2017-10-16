@@ -13,7 +13,6 @@ import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.exception.UnknownPizzaCodeException;
 import fr.pizzeria.model.Pizza;
 import fr.pizzeria.model.PizzaCategory;
-import fr.pizzeria.viewModel.PizzaViewModel;
 
 /**
  * @author Florent Callaou
@@ -52,7 +51,7 @@ public abstract class OptionMenu {
 	 */
 	public abstract void execute(Scanner sc) throws StockageException;
 	
-	protected void listPizzas(List<PizzaViewModel> pizzas) {
+	protected void listPizzas(List<Pizza> pizzas) {
 		if (pizzas.isEmpty()) {
 			LOG.info("The pizza list is empty");
 		} else {
@@ -60,11 +59,11 @@ public abstract class OptionMenu {
 		}
 	}
 	
-	protected PizzaViewModel pizzaCreator(Scanner sc) throws UnknownPizzaCodeException{
+	protected Pizza pizzaCreator(Scanner sc) throws UnknownPizzaCodeException{
 		
 		PizzaCategory categoryPizza = PizzaCategory.getCategoriePizza(categoryChoice(sc));
 			
-		return new PizzaViewModel(codeControl(sc), nameControl(sc), priceControl(sc));
+		return new Pizza(codeControl(sc), nameControl(sc), priceControl(sc), categoryPizza);
 	}
 	
 	private int categoryChoice(Scanner sc) {
@@ -93,6 +92,14 @@ public abstract class OptionMenu {
 	private String codeControl(Scanner sc) {
 		LOG.info("Please select the new code");
 		String codeTemp = sc.next();
+		
+		if(codeTemp.length() > 3){
+			try {
+				throw new StockageException("Code too long (3 caracters authorized)");
+			} catch (StockageException e) {
+				LOG.info(e.getMessage());
+			}
+		}
 		
 		dao.findPizzaByCode(codeTemp).ifPresent(pizza -> { 
 			try {
