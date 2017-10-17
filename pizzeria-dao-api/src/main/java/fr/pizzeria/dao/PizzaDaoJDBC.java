@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.exception.UpdatePizzaException;
+import fr.pizzeria.init.PizzaProvider;
 import fr.pizzeria.model.Pizza;
 import fr.pizzeria.model.PizzaCategory;
 
@@ -31,15 +32,7 @@ public class PizzaDaoJDBC implements IPizzaDao {
 
 	List<Pizza> pizzas = new ArrayList<>();
 
-	Pizza peperoni = new Pizza("PEP", "Pépéroni", 12.50, PizzaCategory.MEAT);
-	Pizza margherita = new Pizza("MAR", "Margherita", 14.00, PizzaCategory.FISH);
-	Pizza reine = new Pizza("REI", "La Reine", 11.50, PizzaCategory.MEAT);
-	Pizza fromage = new Pizza("FRO", "La 4 fromages", 12.00, PizzaCategory.WITHOUT_MEAT);
-	Pizza cannibale = new Pizza("CAN", "La cannibale", 12.50, PizzaCategory.MEAT);
-	Pizza savoyarde = new Pizza("SAV", "La savoyarde", 13.00, PizzaCategory.MEAT);
-	Pizza orientale = new Pizza("ORI", "L’orientale", 13.50, PizzaCategory.MEAT);
-	Pizza indienne = new Pizza("IND", "L’indienne", 14.00, PizzaCategory.MEAT);
-
+	
 	public PizzaDaoJDBC() throws SQLException, ClassNotFoundException {
 
 		ResourceBundle bundle = ResourceBundle.getBundle("jdbc");
@@ -52,6 +45,7 @@ public class PizzaDaoJDBC implements IPizzaDao {
 		user = bundle.getString("user");
 		password = bundle.getString("password");
 
+		pizzas = PizzaProvider.provideInitialPizzaList();
 		initializeDatabase();
 	}
 
@@ -60,33 +54,21 @@ public class PizzaDaoJDBC implements IPizzaDao {
 	}
 
 	private void initializeDatabase(){
-		pizzas.add(peperoni);
-		pizzas.add(margherita);
-		pizzas.add(reine);
-		pizzas.add(fromage);
-		pizzas.add(cannibale);
-		pizzas.add(savoyarde);
-		pizzas.add(orientale);
-		pizzas.add(indienne);
 
-		for (PizzaCategory pizzaCategory : PizzaCategory.values()) {
-			insertPizzaCategory(pizzaCategory);
-		}
-		
 		pizzas.forEach(pizza -> insertPizza(pizza));
 	}
 
 	private void insertPizza(Pizza pizza) {
 
 		if(!findPizzaByCode(pizza.getCode()).isPresent()){
-			String query = "INSERT INTO PIZZA(CODE, NAME, PRICE, ID_CAT) VALUES (?,?,?,?)";
+			String query = "INSERT INTO PIZZA(CODE, NAME, PRICE, CATEGORY) VALUES (?,?,?,?)";
 
 			try (Connection myConnection = connect(); PreparedStatement statement = myConnection.prepareStatement(query)) {
 
 				statement.setString(1, pizza.getCode());
 				statement.setString(2, pizza.getName());
 				statement.setDouble(3, pizza.getPrice());
-				statement.setInt(4, PizzaCategory.valueOf(pizza.getCategory().name()).getIndex());
+				statement.setString(4, pizza.getCategory().name());
 				statement.executeUpdate();
 				statement.close();
 			} catch (SQLException e) {
@@ -94,37 +76,7 @@ public class PizzaDaoJDBC implements IPizzaDao {
 			}
 		}
 	}
-	
-	private void insertPizzaCategory(PizzaCategory pizzaCategory) {
-
-		if(!findPizzaCategoryByLibelle(pizzaCategory.getCategory()).isPresent()){
-			String query = "INSERT INTO CATEGORY(LIBELLE) VALUES (?)";
-
-			try (Connection myConnection = connect(); PreparedStatement statement = myConnection.prepareStatement(query)) {
-				statement.setString(1, pizzaCategory.getCategory());
-				statement.executeUpdate();
-				statement.close();
-			} catch (SQLException e) {
-				LOG.info("Error while creating pizza category : {}", e.getMessage());
-			}
-		}
-	}
-
-	public Optional<PizzaCategory> findPizzaCategoryByLibelle(String libelle) {
-		String query = "SELECT * FROM CATEGORY WHERE LIBELLE = \"" + libelle + "\";";
-		PizzaCategory pizzaCategoryFound = null;
-
-		try(Connection myConnection = connect(); PreparedStatement statement = myConnection.prepareStatement(query); ResultSet resultats = statement.executeQuery();){
-			if(resultats.next()){
-				pizzaCategoryFound = PizzaCategory.valueOf(resultats.getString("LIBELLE").replace(" ", "_").toUpperCase());
-			}
-		} catch (SQLException e) {
-			LOG.info("Error while loading pizza category : {}", e.getMessage());
-		}
 		
-		return Optional.ofNullable(pizzaCategoryFound);
-	}
-	
 	@Override
 	public Optional<Pizza> findPizzaByCode(String code) {
 		String query = "SELECT * FROM PIZZA WHERE CODE = \"" + code + "\";";
@@ -136,7 +88,7 @@ public class PizzaDaoJDBC implements IPizzaDao {
 						resultats.getString("CODE"),
 						resultats.getString("NAME"), 
 						resultats.getDouble("PRICE"), 
-						PizzaCategory.getCategoriePizza(resultats.getInt("ID_CAT"))
+						PizzaCategory.valueOf(resultats.getString("CATEGORY").replaceAll(" ", "_").toUpperCase())
 						);	
 			}
 		} catch (SQLException e) {
@@ -158,7 +110,7 @@ public class PizzaDaoJDBC implements IPizzaDao {
 						resultats.getString("CODE"),
 						resultats.getString("NAME"),
 						resultats.getDouble("PRICE"),
-						PizzaCategory.getCategoriePizza(resultats.getInt("ID_CAT"))
+						PizzaCategory.valueOf(resultats.getString("CATEGORY").replaceAll(" ", "_").toUpperCase())
 						));							
 			}
 		} catch (SQLException e) {
@@ -174,15 +126,15 @@ public class PizzaDaoJDBC implements IPizzaDao {
 	}
 
 	@Override
-	public void updatePizza(String codePizza, Pizza pizza) throws UpdatePizzaException {
+	public void updatePizza(Integer id, Pizza pizza) throws UpdatePizzaException {
 
-		String query = "UPDATE PIZZA SET CODE=?, NAME=?, PRICE=?, ID_CAT=? WHERE CODE = ?";
+		String query = "UPDATE PIZZA SET CODE=?, NAME=?, PRICE=?, CATEGORY=? WHERE ID = ?";
 		try (Connection myConnection = connect(); PreparedStatement statement = myConnection.prepareStatement(query)) {
 			statement.setString(1, pizza.getCode());
 			statement.setString(2, pizza.getName());
 			statement.setDouble(3, pizza.getPrice());
-			statement.setInt(4, PizzaCategory.valueOf(pizza.getCategory().name()).getIndex());
-			statement.setString(5, codePizza);
+			statement.setString(4, pizza.getCategory().name());
+			statement.setInt(5, id);
 			int linesChanged = statement.executeUpdate();
 			statement.close();
 
@@ -213,8 +165,9 @@ public class PizzaDaoJDBC implements IPizzaDao {
 	}
 
 	@Override
-	public int getPizzasNumber() {
-		return 0;
+	public void close() {
+
 	}
+	
 
 }

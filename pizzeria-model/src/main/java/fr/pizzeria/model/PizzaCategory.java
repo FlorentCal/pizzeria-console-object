@@ -1,5 +1,7 @@
 package fr.pizzeria.model;
 
+import javax.persistence.Entity;
+
 /**
  * @author Florent Callaou
  * Enum for categories of pizzas

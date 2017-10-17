@@ -6,6 +6,7 @@ import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.exception.UnknownPizzaCodeException;
 import fr.pizzeria.exception.UpdatePizzaException;
+import fr.pizzeria.model.Pizza;
 
 /**
  * @author Florent Callaou
@@ -43,9 +44,11 @@ public class UpdatePizzaOptionMenu extends OptionMenu {
 		if(codeToUpdate.equals("99")){
 			return;
 		}
-						
+			
+		Pizza pizza = pizzaCreator(sc);
+		
 		try {
-			dao.updatePizza(codeToUpdate, pizzaCreator(sc));
+			dao.updatePizza(pizza.getId(), pizza);
 		} catch (StockageException e) {
 			LOG.info(e.getMessage());
 		}

@@ -1,41 +1,50 @@
 package fr.pizzeria.model;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author Florent Callaou
  * Class containing elements of a Pizza
  */
+@Entity
+@Table(name="Pizza")
 public class Pizza {
 	
-	/** id : int */
-	private int id;
-	public static final String PROP_ID = "id";
-
-	/** currentId : int : L'id actuel des pizzas */
-	private static int currentId = 1;
-	public static final String PROP_CURRENT_ID = "currentId";
+	/** Integer : int */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 	/** code : String */
 	@ToString(uppercase = true, separator = "#val ->")
+	@Column(name = "CODE", length = 3, nullable = false)
 	private String code;
-	public static final String PROP_CODE = "code";
 
 	/** name : String */
 	@ToString(uppercase = true, separator = " #val")
+	@Column(name = "NAME", length = 100, nullable = false)
 	private String name;
-	public static final String PROP_NAME = "name";
 
 	/** price : double */
 	@ToString(decimalFormat = true, separator = " (#val€)")
+	@Column(name = "PRICE", nullable = false)
 	private double price;
-	public static final String PROP_PRICE = "price";
 
 	/** category : PizzaCategory */
 	@ToString(separator = " [#val]")
+	@Enumerated(EnumType.STRING)
 	private PizzaCategory category;
-	public static final String PROP_CATEGORY = "category";
+
+	public Pizza() {
+		super();
+	}
 
 	/**
 	 * Pizza Constructor
@@ -49,11 +58,13 @@ public class Pizza {
 		this.name = name;
 		this.price = price;
 		this.category = category;
-		setId(currentId);
-		currentId++;
 	}
-
-
+	
+	public Pizza(Integer id, String code, String name, double price, PizzaCategory category) {
+		this(code, name, price, category);
+		this.id = id;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -65,31 +76,15 @@ public class Pizza {
 	/** Getter for id
 	 * @return the id
 	 */
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
 	/** Setter for id
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
-		int oldId = this.id;
+	public void setId(Integer id) {
 		this.id = id;
-		propertyChangeSupport.firePropertyChange(PROP_ID, oldId, id);
-	}
-
-	/** Getter for currentId
-	 * @return the currentId
-	 */
-	public static int getCurrentId() {
-		return currentId;
-	}
-
-	/** Setter for currentId
-	 * @param currentId the currentId to set
-	 */
-	public static void setCurrentId(int currentId) {
-		Pizza.currentId = currentId;
 	}
 
 	/** Getter for code
@@ -103,9 +98,7 @@ public class Pizza {
 	 * @param code the code to set
 	 */
 	public void setCode(String code) {
-		String oldCode = this.code;
 		this.code = code;
-		propertyChangeSupport.firePropertyChange(PROP_CODE, oldCode, code);
 	}
 
 	/** Getter for name
@@ -119,9 +112,7 @@ public class Pizza {
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
-		String oldName = this.name;
 		this.name = name;
-		propertyChangeSupport.firePropertyChange(PROP_NAME, oldName, name);
 	}
 
 	/** Getter for price
@@ -135,9 +126,7 @@ public class Pizza {
 	 * @param price the price to set
 	 */
 	public void setPrice(double price) {
-		double oldPrice = this.price;
 		this.price = price;
-		propertyChangeSupport.firePropertyChange(PROP_PRICE, oldPrice, price);
 	}
 
 	/** Getter for category
@@ -151,28 +140,7 @@ public class Pizza {
 	 * @param category the category to set
 	 */
 	public void setCategory(PizzaCategory category) {
-		PizzaCategory oldCategory = this.category;
 		this.category = category;
-		propertyChangeSupport.firePropertyChange(PROP_CATEGORY, oldCategory, category);
 	}
 
-	private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-
-	/**
-	 * Add PropertyChangeListener.
-	 *
-	 * @param listener
-	 */
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		propertyChangeSupport.addPropertyChangeListener(listener);
-	}
-
-	/**
-	 * Remove PropertyChangeListener.
-	 *
-	 * @param listener
-	 */
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		propertyChangeSupport.removePropertyChangeListener(listener);
-	}
 }

@@ -8,6 +8,7 @@ import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
 import fr.pizzeria.model.PizzaCategory;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
@@ -17,7 +18,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class FXMLDocumentControllerPizza implements Initializable {
 
@@ -45,8 +48,11 @@ public class FXMLDocumentControllerPizza implements Initializable {
     Button yesButton;
     
     @FXML
-    Button noButton;    
+    Button noButton;  
     
+    @FXML
+    Button quitButton;
+        
     private ObjectProperty<Double> priceConverter;
     
     IPizzaDao dao = null;
@@ -70,10 +76,11 @@ public class FXMLDocumentControllerPizza implements Initializable {
 			comboBoxCategory.getItems().add(value.getCategory());
 		}
 		
+		
 	}
 
 	private void instanciationViewModel() throws InstantiationException, IllegalAccessException, ClassNotFoundException{
-		dao = (IPizzaDao) Class.forName("fr.pizzeria.dao.PizzaDaoJDBC").newInstance();
+		dao = (IPizzaDao) Class.forName("fr.pizzeria.dao.PizzaDaoJPA").newInstance();
 	}
 
 	private void cellFactories(){           
@@ -86,7 +93,7 @@ public class FXMLDocumentControllerPizza implements Initializable {
 			protected void updateItem(Pizza item, boolean empty) {
 				super.updateItem(item, empty);
 				if(!empty){
-					textProperty().bind(Bindings.concat(item.getCode().concat("\t : ").concat(item.getName())));
+					textProperty().bind(Bindings.concat(item.getId() + " " + item.getCode().concat("\t : ").concat(item.getName())));
 				} else {
 					textProperty().unbind();
 					setText(null);
@@ -116,11 +123,9 @@ public class FXMLDocumentControllerPizza implements Initializable {
 	}
 	
 	public void onClickSave(){
-
-		
 		try {
 			dao.saveNewPizza(pizzaCreator());
-		} catch (NumberFormatException | StockageException e) {
+		} catch (StockageException e) {
 			labelInfo.setText(e.getMessage());
 		}
 		
@@ -157,9 +162,9 @@ public class FXMLDocumentControllerPizza implements Initializable {
 	}
 	
 	public void onClickModify(){
-		String previousCode = listViewPizzas.getSelectionModel().getSelectedItem().getCode();
+		Integer id = listViewPizzas.getSelectionModel().getSelectedItem().getId();
 		try {
-			dao.updatePizza(previousCode, pizzaCreator());
+			dao.updatePizza(id, pizzaCreator());
 		} catch (NumberFormatException | StockageException e) {
 			labelInfo.setText(e.getMessage());
 		}
@@ -172,7 +177,7 @@ public class FXMLDocumentControllerPizza implements Initializable {
 				textFieldCode.getText().toUpperCase(), 
 				textFieldName.getText(), 
 				Double.parseDouble(textFieldPrice.getText().replace(",", ".")), 
-				PizzaCategory.valueOf(comboBoxCategory.getSelectionModel().getSelectedItem().toUpperCase()));
+				PizzaCategory.valueOf(comboBoxCategory.getSelectionModel().getSelectedItem().replaceAll(" ", "_").toUpperCase()));
 	}
 	
 	private void clearElements(){
@@ -181,4 +186,13 @@ public class FXMLDocumentControllerPizza implements Initializable {
 		
 		labelInfo.setText("");
 	}
+	
+	public void onCloseApplication(){
+		dao.close();
+		Platform.exit();
+		System.exit(0);
+		
+	}
+	
+
 }

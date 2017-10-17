@@ -1,17 +1,19 @@
 package fr.pizzeria.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
+import fr.pizzeria.model.PizzaCategory;
 
 /**
  * @author Florent Callaou
  * Interface of pizzas
  */
 public interface IPizzaDao {
-
+	
 	/**
 	 * @return the list of pizzas
 	 */
@@ -36,7 +38,7 @@ public interface IPizzaDao {
 	 * @param pizza
 	 * @throws StockageException
 	 */
-	void updatePizza(String codePizza, Pizza pizza) throws StockageException;
+	void updatePizza(Integer id, Pizza pizza) throws StockageException;
 
 	/**
 	 * Delete a pizza
@@ -44,11 +46,8 @@ public interface IPizzaDao {
 	 * @throws StockageException
 	 */
 	void deletePizza(Pizza pizza) throws StockageException;
-
-	/**
-	 * @return the number of pizzas
-	 */
-	int getPizzasNumber();
+	
+	void close();
 
 
 }
