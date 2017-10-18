@@ -21,18 +21,32 @@ import fr.pizzeria.model.Pizza;
 import fr.pizzeria.model.PizzaCategory;
 
 
+/**
+ * @author Florent Callaou
+ * Dao persisting with JDBC
+ */
 public class PizzaDaoJDBC implements IPizzaDao {
 
+	/** LOG : Logger */
 	private static final Logger LOG = LoggerFactory.getLogger(PizzaDaoJDBC.class);
 
+	/** driver : String */
 	private String driver;
+	/** url : String */
 	private String url;
+	/** user : String */
 	private String user;
+	/** password : String */
 	private String password;
 
+	/** pizzas : List<Pizza> */
 	List<Pizza> pizzas = new ArrayList<>();
-
 	
+	/**
+	 * Construcor
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException
+	 */
 	public PizzaDaoJDBC() throws SQLException, ClassNotFoundException {
 
 		ResourceBundle bundle = ResourceBundle.getBundle("jdbc");
@@ -49,22 +63,33 @@ public class PizzaDaoJDBC implements IPizzaDao {
 		initializeDatabase();
 	}
 
+	/**
+	 * Connect to the given URL
+	 * @return : The connection
+	 * @throws SQLException
+	 */
 	public Connection connect() throws SQLException {
 		return DriverManager.getConnection(url, user, password);
 	}
 
+	/**
+	 * Initilize the database with a list of pizza
+	 */
 	private void initializeDatabase(){
 
 		pizzas.forEach(pizza -> insertPizza(pizza));
 	}
 
+	/**
+	 * Insert a new pizza in database (only if it doesn't already exist)
+	 * @param pizza : the pizza to insert
+	 */
 	private void insertPizza(Pizza pizza) {
 
 		if(!findPizzaByCode(pizza.getCode()).isPresent()){
 			String query = "INSERT INTO PIZZA(CODE, NAME, PRICE, CATEGORY) VALUES (?,?,?,?)";
 
 			try (Connection myConnection = connect(); PreparedStatement statement = myConnection.prepareStatement(query)) {
-
 				statement.setString(1, pizza.getCode());
 				statement.setString(2, pizza.getName());
 				statement.setDouble(3, pizza.getPrice());
@@ -77,6 +102,9 @@ public class PizzaDaoJDBC implements IPizzaDao {
 		}
 	}
 		
+	/* (non-Javadoc)
+	 * @see fr.pizzeria.dao.IPizzaDao#findPizzaByCode(java.lang.String)
+	 */
 	@Override
 	public Optional<Pizza> findPizzaByCode(String code) {
 		String query = "SELECT * FROM PIZZA WHERE CODE = \"" + code + "\";";
@@ -98,6 +126,9 @@ public class PizzaDaoJDBC implements IPizzaDao {
 		return Optional.ofNullable(pizzaFound);
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.pizzeria.dao.IPizzaDao#findAllPizzas()
+	 */
 	@Override
 	public List<Pizza> findAllPizzas() {
 		pizzas = new ArrayList<>();
@@ -120,11 +151,17 @@ public class PizzaDaoJDBC implements IPizzaDao {
 		return pizzas;
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.pizzeria.dao.IPizzaDao#saveNewPizza(fr.pizzeria.model.Pizza)
+	 */
 	@Override
 	public void saveNewPizza(Pizza pizzaToAdd) throws SavePizzaException {
 		insertPizza(pizzaToAdd);
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.pizzeria.dao.IPizzaDao#updatePizza(java.lang.Integer, fr.pizzeria.model.Pizza)
+	 */
 	@Override
 	public void updatePizza(Integer id, Pizza pizza) throws UpdatePizzaException {
 
@@ -147,6 +184,9 @@ public class PizzaDaoJDBC implements IPizzaDao {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.pizzeria.dao.IPizzaDao#deletePizza(fr.pizzeria.model.Pizza)
+	 */
 	@Override
 	public void deletePizza(Pizza pizzaToDelete) throws DeletePizzaException {
 		String query = "DELETE FROM PIZZA WHERE CODE = ?";
@@ -164,9 +204,12 @@ public class PizzaDaoJDBC implements IPizzaDao {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.pizzeria.dao.IPizzaDao#close()
+	 */
 	@Override
 	public void close() {
-
+		// Usefull in JPA
 	}
 	
 

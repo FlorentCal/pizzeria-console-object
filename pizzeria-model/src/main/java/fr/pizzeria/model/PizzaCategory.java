@@ -1,7 +1,5 @@
 package fr.pizzeria.model;
 
-import javax.persistence.Entity;
-
 /**
  * @author Florent Callaou
  * Enum for categories of pizzas
@@ -27,7 +25,6 @@ public enum PizzaCategory {
 		this.category = category;
 		this.index = index;
 	}
-	
 		
 	/** Getter for category
 	 * @return the category

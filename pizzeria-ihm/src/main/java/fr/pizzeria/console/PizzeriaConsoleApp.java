@@ -2,7 +2,6 @@ package fr.pizzeria.console;
 
 import java.util.HashMap;
 import fr.pizzeria.dao.IPizzaDao;
-import fr.pizzeria.dao.PizzaDaoJDBC;
 import fr.pizzeria.ihm.AddPizzaOptionMenu;
 import fr.pizzeria.ihm.UpdatePizzaOptionMenu;
 import fr.pizzeria.ihm.DeletePizzaOptionMenu;
@@ -12,7 +11,7 @@ import fr.pizzeria.ihm.PizzeriaMenu;
 
 /**
  * @author Florent Callaou
- * Classe main du projet
+ * Console application
  */
 public class PizzeriaConsoleApp {
 		

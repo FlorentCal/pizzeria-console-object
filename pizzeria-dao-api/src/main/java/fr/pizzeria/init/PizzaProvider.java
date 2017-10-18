@@ -6,10 +6,19 @@ import java.util.List;
 import fr.pizzeria.model.Pizza;
 import fr.pizzeria.model.PizzaCategory;
 
+/**
+ * @author Florent Callaou
+ * Provide a list of pizza
+ */
 public class PizzaProvider {
 	
+	/** pizzas : List<Pizza> */
 	static List<Pizza> pizzas; 
 		
+	/**
+	 * Create a list of pizza
+	 * @return : the list of pizza
+	 */
 	public static List<Pizza> provideInitialPizzaList() {
 		
 		Pizza peperoni = new Pizza("PEP", "Pépéroni", 12.50, PizzaCategory.MEAT);
@@ -33,6 +42,13 @@ public class PizzaProvider {
 		pizzas.add(indienne);
 		
 		return pizzas;
+		
+	}
+	
+	/**
+	 * Private construcor to hide implicit one
+	 */
+	private PizzaProvider(){
 		
 	}
 

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.exception.StockageException;
-import fr.pizzeria.exception.UnknownPizzaCodeException;
 import fr.pizzeria.model.Pizza;
 import fr.pizzeria.model.PizzaCategory;
 
@@ -20,12 +19,17 @@ import fr.pizzeria.model.PizzaCategory;
  */
 public abstract class OptionMenu {
 	
+	/** dao : IPizzaDao */
 	protected IPizzaDao dao;
+	/** line : String */
 	protected String line;
 	
+	/** MIN_CHOICE : int : Le choix max du code de category */
 	private static final int MIN_CHOICE = 1;
+	/** MAX_CHOICE : int : Le choix min du code de category */
 	private static final int MAX_CHOICE = 3;
 	
+	/** LOG : Logger */
 	protected static final Logger LOG = LoggerFactory.getLogger(OptionMenu.class);
 	
 	/**
@@ -51,6 +55,10 @@ public abstract class OptionMenu {
 	 */
 	public abstract void execute(Scanner sc) throws StockageException;
 	
+	/**
+	 * List pizzas
+	 * @param pizzas
+	 */
 	protected void listPizzas(List<Pizza> pizzas) {
 		if (pizzas.isEmpty()) {
 			LOG.info("The pizza list is empty");
@@ -59,13 +67,23 @@ public abstract class OptionMenu {
 		}
 	}
 	
-	protected Pizza pizzaCreator(Scanner sc) throws UnknownPizzaCodeException{
+	/**
+	 * Create a pizza with verifications
+	 * @param sc
+	 * @return : the pizza created
+	 */
+	protected Pizza pizzaCreator(Scanner sc) {
 		
 		PizzaCategory categoryPizza = PizzaCategory.getCategoriePizza(categoryChoice(sc));
 			
 		return new Pizza(codeControl(sc), nameControl(sc), priceControl(sc), categoryPizza);
 	}
 	
+	/**
+	 * Allow user to chose a category for its pizza
+	 * @param sc
+	 * @return : the index chosen
+	 */
 	private int categoryChoice(Scanner sc) {
 		int index = 1;
 		while(index <= MAX_CHOICE || index >= MIN_CHOICE){
@@ -89,6 +107,11 @@ public abstract class OptionMenu {
 		return index;
 	}
 
+	/**
+	 * Control the code entered
+	 * @param sc
+	 * @return : the code
+	 */
 	private String codeControl(Scanner sc) {
 		LOG.info("Please select the new code");
 		String codeTemp = sc.next();
@@ -112,11 +135,21 @@ public abstract class OptionMenu {
 		return codeTemp;
 	}
 	
+	/**
+	 * Control the named entered
+	 * @param sc
+	 * @return : the name
+	 */
 	private String nameControl(Scanner sc){
 		LOG.info("Please select the new name (spaceless)");
 		return sc.next();
 	}
 	
+	/**
+	 * Control the price entered
+	 * @param sc
+	 * @return : the price
+	 */
 	private double priceControl(Scanner sc){
 		LOG.info("Please select the new price (with a comma for decimals");
 		double priceTemp = 0;

@@ -1,12 +1,10 @@
 package fr.pizzeria.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
-import fr.pizzeria.model.PizzaCategory;
 
 /**
  * @author Florent Callaou
@@ -47,6 +45,9 @@ public interface IPizzaDao {
 	 */
 	void deletePizza(Pizza pizza) throws StockageException;
 	
+	/**
+	 * Close EntityManagerFactory when application is closed (JPA)
+	 */
 	void close();
 
 

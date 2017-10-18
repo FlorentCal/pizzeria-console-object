@@ -11,19 +11,35 @@ import com.github.lalyos.jfiglet.FigletFont;
 
 import fr.pizzeria.exception.StockageException;
 
+/**
+ * @author Florent Callaou
+ * Menu console
+ */
 public class PizzeriaMenu {
 	
+	/** LOG : Logger */
 	public static final Logger LOG = LoggerFactory.getLogger(PizzeriaMenu.class);
+	/** pizzeriaAdministration : String : Stylish display */
 	private String pizzeriaAdministration = FigletFont.convertOneLine("Tower   of   pizza");
 
+	/** menus : Map<Integer,OptionMenu> */
 	private Map<Integer, OptionMenu> menus = new HashMap<>();
+	/** sc : Scanner */
 	Scanner sc = new Scanner(System.in);
 	
+	/**
+	 * Constructor
+	 * @param menus
+	 */
 	public PizzeriaMenu(Map<Integer, OptionMenu> menus){
 		this.menus = menus;
 		
 	}
 	
+	/**
+	 * Display the menu for the user
+	 * @throws StockageException
+	 */
 	public void menuDisplay() throws StockageException{
 		int choice = 0;
 		
@@ -46,6 +62,11 @@ public class PizzeriaMenu {
 		
 	}
 	
+	/**
+	 * Display one line
+	 * @param id : the id of the line
+	 * @param line 
+	 */
 	private void lineDisplay(int id, String line){
 		LOG.info("{}. {}", id, line);
 	}
